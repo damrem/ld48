@@ -4,6 +4,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
     public int Seed = 0;
     public Block BlockPrefab;
+    public Exit ExitPrefab;
     public Color[] Colors;
     public LevelDef[] LevelDefs;
 
@@ -18,7 +19,7 @@ public class GameManager : MonoBehaviour {
     Level CreateLevel(int index) {
         var entity = new GameObject($"Level-{index}");
         entity.transform.SetParent(transform);
-        var level = entity.AddComponent<Level>().Init(index, LevelDefs[index], BlockPrefab, Seed, Colors);
+        var level = entity.AddComponent<Level>().Init(index, LevelDefs[index], BlockPrefab, ExitPrefab, Seed, Colors);
         level.OnComplete += NextLevel;
         return level;
     }

@@ -11,26 +11,32 @@ public class Level : MonoBehaviour {
     public LevelDef Def { get; private set; }
     Color[] Colors;
     Block BlockPrefab;
+    Exit ExitPrefab;
 
     PRNG PRNG;
     Block[,] Blocks;
-    public Level Init(int index, LevelDef def, Block blockPrefab, int seed, Color[] colors) {
+    public Level Init(int index, LevelDef def, Block blockPrefab, Exit exitPrefab, int seed, Color[] colors) {
         Def = def;
         PRNG = new PRNG(seed);
         BlockPrefab = blockPrefab;
+        ExitPrefab = exitPrefab;
         Colors = colors;
         Blocks = new Block[def.Width, def.Depth];
         Blocks.Fill(CreateBlock);
 
         Blocks.GetRow(0).ToList().ForEach(DestroyBlock);
 
-        AddStair();
+        AddExit();
 
         return this;
     }
 
-    void AddStair() {
-
+    void AddExit() {
+        var exit = Instantiate(ExitPrefab);
+        exit.transform.SetParent(transform);
+        var cell = new Cell(PRNG.Int(Def.Width), Def.Depth - 1);
+        DestroyBlock(cell);
+        exit.GetComponent<Exit>().Init(cell);
     }
 
     Block CreateBlock(int x, int y) {
