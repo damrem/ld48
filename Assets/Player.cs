@@ -6,7 +6,9 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(CellPosition))]
 public class Player : MonoBehaviour {
+    enum MoveType { Walk, Fall }
     public event Action<Vector2Int> OnMovementRequired;
+    public event Action OnWalked;
     public Cell Cell { get { return GetComponent<CellPosition>().Cell; } }
     public InputActionAsset ActionAsset;
     public float MoveDuration = .5f;
@@ -49,10 +51,12 @@ public class Player : MonoBehaviour {
     public void MoveToCell(Cell cell) {
         if (IsMoving) return;
 
-        StartCoroutine(AnimateMove(cell));
+        var moveType = cell.X != Cell.X ? MoveType.Walk : MoveType.Fall;
+
+        StartCoroutine(AnimateMove(cell, moveType));
     }
 
-    IEnumerator AnimateMove(Cell cell) {
+    IEnumerator AnimateMove(Cell cell, MoveType moveType) {
         IsMoving = true;
         var from = transform.position;
         var to = cell.ToWorldPosition();
@@ -64,5 +68,6 @@ public class Player : MonoBehaviour {
         }
         GetComponent<CellPosition>().SetCell(cell);
         IsMoving = false;
+        if (moveType == MoveType.Walk) OnWalked?.Invoke();
     }
 }

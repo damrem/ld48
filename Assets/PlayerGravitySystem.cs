@@ -8,11 +8,12 @@ public class PlayerGravitySystem : MonoBehaviour {
     public PlayerGravitySystem Init(Level level, Player player) {
         Level = level;
         Player = player;
-        level.OnBlockDestroyed += OnBlockDestroyed;
+        player.OnWalked += CheckFall;
+        level.OnBlockDestroyed += CheckFall;
         return this;
     }
 
-    void OnBlockDestroyed() {
+    void CheckFall() {
         var blocksUnderPlayer = Level.GetColumn(Player.Cell.X).ToList().GetRangeFrom(Player.Cell.Y);
         Cell targetCell = Player.Cell;
         for (int y = 0; y < blocksUnderPlayer.Count; y++) {
