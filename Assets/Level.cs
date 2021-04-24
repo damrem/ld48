@@ -11,19 +11,22 @@ public class Level : MonoBehaviour {
     public LevelDef Def { get; private set; }
     public Exit Exit { get; private set; }
     public Coin[,] Coins { get; private set; }
+    public Gem[,] Gems { get; private set; }
     Color[] Colors;
     Block BlockPrefab;
     Exit ExitPrefab;
     Coin CoinPrefab;
+    Gem GemPrefab;
     PRNG PRNG;
     Block[,] Blocks;
     BlockGroupSystem BlockGroupSystem;
-    public Level Init(LevelDef def, Block blockPrefab, Exit exitPrefab, Coin coinPrefab, int seed, Color[] colors) {
+    public Level Init(LevelDef def, Block blockPrefab, Exit exitPrefab, Coin coinPrefab, Gem gemPrefab, int seed, Color[] colors) {
         Def = def;
         PRNG = new PRNG(seed);
         BlockPrefab = blockPrefab;
         ExitPrefab = exitPrefab;
         CoinPrefab = coinPrefab;
+        GemPrefab = gemPrefab;
         Colors = colors;
         Blocks = new Block[def.Width, def.Depth + 2];
         Blocks.Fill((x, y) => CreateBlock(x, y, true));
@@ -36,6 +39,10 @@ public class Level : MonoBehaviour {
 
         Coins = new Coin[def.Width, def.Depth + 2];
         Coins.Fill(CreateCoin);
+
+        Gems = new Gem[def.Width, def.Depth + 2];
+        Gems.Fill(CreateGem);
+
 
         return this;
     }
@@ -55,6 +62,16 @@ public class Level : MonoBehaviour {
         return Instantiate(CoinPrefab, transform).Init(cell);
     }
 
+    Gem CreateGem(int x, int y) {
+        if (y == 0) return null;
+        if (!PRNG.Bool(Def.GemDensity)) return null;
+
+        var cell = new Cell(x, y);
+        if (cell == Exit.Cell) return null;
+
+        return Instantiate(GemPrefab, transform).Init(cell);
+    }
+
     IEnumerable<Block> CreateBottom() {
         Blocks.GetRow(Def.Depth + 1).ToList().FindAll(block => block != null).ForEach(DestroyBlock);
         for (int x = 0; x < Def.Width; x++) {
@@ -70,6 +87,10 @@ public class Level : MonoBehaviour {
     }
 
     public Coin GetCoin(Cell cell) {
+        return Coins[cell.X, cell.Y];
+    }
+
+    public Coin GetGem(Cell cell) {
         return Coins[cell.X, cell.Y];
     }
 

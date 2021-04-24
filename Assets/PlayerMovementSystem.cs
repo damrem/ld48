@@ -1,12 +1,15 @@
+using System;
 using UnityEngine;
 
 public class PlayerMovementSystem : MonoBehaviour {
+    public event Action<EnergySpendingType> OnEnergySpent;
     Level Level;
     Player Player;
-    public PlayerMovementSystem Init(Level level, Player player) {
+    public PlayerMovementSystem Init(Level level, Player player, Action<EnergySpendingType> onEnergySpent) {
         Level = level;
         Player = player;
         player.OnMovementRequired += OnMovementRequired;
+        OnEnergySpent = onEnergySpent;
         return this;
     }
 
@@ -18,7 +21,13 @@ public class PlayerMovementSystem : MonoBehaviour {
 
         var targetBlock = Level.GetBlock(targetCell);
 
-        if (targetBlock) Level.DestroyGroup(targetBlock);
-        else Player.MoveToCell(targetCell);
+        if (targetBlock) {
+            OnEnergySpent.Invoke(EnergySpendingType.Dig);
+            Level.DestroyGroup(targetBlock);
+        }
+        else {
+            OnEnergySpent.Invoke(EnergySpendingType.Walk);
+            Player.MoveToCell(targetCell);
+        }
     }
 }
