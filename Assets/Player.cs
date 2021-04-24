@@ -1,11 +1,14 @@
 using Damrem.UnityEngine;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CellPosition))]
 public class Player : MonoBehaviour {
+    InputActionAsset Actions;
     public float MovePeriod = .5f;
 
     float OwnTime;
+    float LastHorizontalAxis = 0;
 
     public Player Init(Cell cell) {
         GetComponent<CellPosition>().Init(cell);
@@ -13,6 +16,7 @@ public class Player : MonoBehaviour {
     }
 
     void Update() {
+        LastHorizontalAxis = Input.GetAxis(AxisName.Horizontal);
         if (IsMoveTime()) Move();
     }
 
@@ -26,10 +30,10 @@ public class Player : MonoBehaviour {
 
     void Move() {
         Debug.Log("Move");
-        var h = Input.GetAxis(AxisName.Horizontal);
-        if (h == 0) return;
+        if (LastHorizontalAxis == 0) return;
+
         var movement = Vector3.right;
-        if (h < 0) movement *= -1;
+        if (LastHorizontalAxis < 0) movement *= -1;
         transform.position = transform.position + movement;
     }
 }

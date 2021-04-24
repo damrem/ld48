@@ -1,0 +1,25 @@
+- platformer descente
+  - format
+    - 2d
+    - 3d
+  - skill
+  - upgrades
+    - chance
+      - proba drop énergie
+      - proba drop xp
+      - proba autel énergie
+      - proba autel xp
+    - énergie
+      - réserve
+    - lumière
+      - rayon
+      - intensité
+    - tir
+      - coût en énerge
+      - rapidité recharge
+      - nb de rebonds
+  - enemies
+    - bats
+    - grunts
+- expansion vers le bas
+-
