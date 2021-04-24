@@ -1,39 +1,62 @@
-using Damrem.UnityEngine;
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(CellPosition))]
 public class Player : MonoBehaviour {
-    InputActionAsset Actions;
-    public float MovePeriod = .5f;
-
-    float OwnTime;
-    float LastHorizontalAxis = 0;
+    public event Action<Vector2Int> OnMovementRequired;
+    public Cell Cell { get { return GetComponent<CellPosition>().Cell; } }
+    public InputActionAsset ActionAsset;
+    public float MoveDuration = .5f;
+    bool IsMoving = false;
 
     public Player Init(Cell cell) {
+        var playerInput = GetComponent<PlayerInput>();
         GetComponent<CellPosition>().Init(cell);
+
+        playerInput.enabled = false;
+        StartCoroutine(Enable(playerInput));
+
         return this;
     }
 
-    void Update() {
-        LastHorizontalAxis = Input.GetAxis(AxisName.Horizontal);
-        if (IsMoveTime()) Move();
+    IEnumerator Enable(PlayerInput playerInput) {
+        yield return new WaitForSeconds(.5f);
+
+        playerInput.enabled = true;
     }
 
-    bool IsMoveTime() {
-        OwnTime += Time.deltaTime;
-        if (OwnTime < MovePeriod) return false;
-
-        OwnTime = 0;
-        return true;
+    void OnHorizontalMove(InputValue value) {
+        if (IsMoving) return;
+        Debug.Log("OnHorizontalMove " + value.Get<float>());
+        OnMovementRequired.Invoke(new Vector2Int((int)value.Get<float>(), 0));
     }
 
-    void Move() {
-        Debug.Log("Move");
-        if (LastHorizontalAxis == 0) return;
+    void OnVerticalMove(InputValue value) {
+        if (IsMoving) return;
+        Debug.Log("OnVerticalMove " + value.Get<float>());
+        OnMovementRequired.Invoke(new Vector2Int(0, (int)value.Get<float>()));
+    }
 
-        var movement = Vector3.right;
-        if (LastHorizontalAxis < 0) movement *= -1;
-        transform.position = transform.position + movement;
+    public void MoveToCell(Cell cell) {
+        if (IsMoving) return;
+
+        StartCoroutine(AnimateMove(cell));
+    }
+
+    IEnumerator AnimateMove(Cell cell) {
+        IsMoving = true;
+        var from = transform.position;
+        var to = cell.ToVector3();
+        float elapsed = 0;
+        while (elapsed < MoveDuration) {
+            elapsed += Time.deltaTime;
+            transform.position = Vector2.Lerp(from, to, elapsed / MoveDuration);
+            yield return null;
+        }
+        GetComponent<CellPosition>().SetCell(cell);
+        IsMoving = false;
     }
 }

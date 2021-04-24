@@ -6,6 +6,13 @@ public class PlayerMovementSystem : MonoBehaviour {
     public PlayerMovementSystem Init(Level level, Player player) {
         Level = level;
         Player = player;
+        player.OnMovementRequired += OnMovementRequired;
         return this;
+    }
+
+    void OnMovementRequired(Vector2Int direction) {
+        var targetCell = Player.Cell + direction;
+        if (targetCell.X < 0 || targetCell.X >= Level.Width) return;
+        Player.MoveToCell(targetCell);
     }
 }

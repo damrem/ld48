@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 50514582}
   - component: {fileID: 50514581}
+  - component: {fileID: 50514583}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -168,6 +169,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &50514583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50514580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e60682a1a8ff0bd458c13ea07d9a5587, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &188315838
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,8 +217,8 @@ Camera:
   m_GameObject: {fileID: 188315838}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -298,6 +311,7 @@ GameObject:
   - component: {fileID: 497695785}
   - component: {fileID: 497695784}
   - component: {fileID: 497695788}
+  - component: {fileID: 497695789}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -331,6 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2320250c748371b498402d7f1524bda6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ActionAsset: {fileID: -944628639613478452, guid: 142853a0048a40542a1d5daae4e322ba, type: 3}
   MovePeriod: 0.5
 --- !u!58 &497695785
 CircleCollider2D:
@@ -409,6 +424,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df2564e08276c92448239407f92328c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &497695789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497695782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 142853a0048a40542a1d5daae4e322ba, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: PlayerControlScheme
+  m_DefaultActionMap: PlayerActionMap
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &546770224
 GameObject:
   m_ObjectHideFlags: 0
