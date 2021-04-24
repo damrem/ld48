@@ -26,7 +26,7 @@ public class EnergyBar : MonoBehaviour {
     void SetValue(int value) {
         if (value < 0) return;
 
-        if (value > MaxValue) return;
+        if (value > MaxValue) value = MaxValue;
 
         Value = value;
 

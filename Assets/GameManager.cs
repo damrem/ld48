@@ -1,13 +1,14 @@
 using Cinemachine;
 using Damrem.Procedural;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(ExitSystem))]
 [RequireComponent(typeof(CoinPickSystem))]
 [RequireComponent(typeof(GemPickSystem))]
 [RequireComponent(typeof(PlayerMovementSystem))]
 [RequireComponent(typeof(PlayerGravitySystem))]
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour, IPointerClickHandler {
     public int Seed = 0;
     public Player PlayerPrefab;
     public Block BlockPrefab;
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour {
     public Gem GemPrefab;
     public Purse Purse;
     public EnergyBar EnergyBar;
+    public LevelTitle LevelTitle;
     public int EnergyRefill = 10;
     public Color[] Colors;
     public LevelDef[] LevelDefs;
@@ -32,7 +34,7 @@ public class GameManager : MonoBehaviour {
     void Init() {
         PRNG = new PRNG(Seed);
         InitHUD();
-        NextLevel();
+        PreNextLevel();
     }
 
     void Clear() {
@@ -61,16 +63,30 @@ public class GameManager : MonoBehaviour {
         return player;
     }
 
-    void NextLevel() {
+    void PreNextLevel() {
+
         Clear();
 
-        CurrentLevel = CreateLevel(CurrentLevelIndex++);
+        CurrentLevelIndex++;
+        LevelTitle.SetLevelNumber(CurrentLevelIndex);
+        LevelTitle.Show();
+    }
+
+    public void OnPointerClick(PointerEventData data) {
+        if (!LevelTitle.enabled) return;
+
+        LevelTitle.Hide();
+        NextLevel();
+    }
+
+    void NextLevel() {
+        CurrentLevel = CreateLevel(CurrentLevelIndex);
         Player = CreatePlayer(new Cell(PRNG.Int(CurrentLevel.Def.Width), 0));
         GetComponent<PlayerMovementSystem>().Init(CurrentLevel, Player, SpendEnergy);
         GetComponent<PlayerGravitySystem>().Init(CurrentLevel, Player);
         GetComponent<CoinPickSystem>().Init(CurrentLevel, Player, PickUpCoin);
         GetComponent<GemPickSystem>().Init(CurrentLevel, Player, PickUpGem);
-        GetComponent<ExitSystem>().Init(CurrentLevel, Player, NextLevel);
+        GetComponent<ExitSystem>().Init(CurrentLevel, Player, PreNextLevel);
 
         SetupCamera(Player.transform, CurrentLevel.Def.Width);
     }
@@ -81,7 +97,7 @@ public class GameManager : MonoBehaviour {
     }
 
     void PickUpGem() {
-        Debug.Log("PickUpCoin");
+        Debug.Log("PickUpGem");
         EnergyBar.Increment(EnergyRefill);
     }
 
