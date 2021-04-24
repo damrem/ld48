@@ -27,8 +27,8 @@ public class GameManager : MonoBehaviour {
     }
 
     Player CreatePlayer(Cell cell) {
-        var player = Instantiate(PlayerPrefab).Init(cell);
-        player.transform.SetParent(transform);
+        var player = Instantiate(PlayerPrefab, transform).Init(cell);
+        player.name = "Player";
         return player;
     }
 
@@ -41,12 +41,13 @@ public class GameManager : MonoBehaviour {
         GetComponentInChildren<PlayerGravitySystem>().Init(CurrentLevel, Player);
         GetComponentInChildren<ExitSystem>().Init(CurrentLevel, Player, NextLevel);
 
-        CameraFollow(Player.transform);
+        SetupCamera(Player.transform, CurrentLevel.Def.Width);
     }
 
-    void CameraFollow(Transform target) {
+    void SetupCamera(Transform target, int size) {
         var camera = GetComponentInChildren<CinemachineVirtualCamera>();
         camera.Follow = camera.LookAt = target;
+        camera.m_Lens.OrthographicSize = size;
     }
 
     void Clear() {
