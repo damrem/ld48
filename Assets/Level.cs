@@ -37,11 +37,12 @@ public class Level : MonoBehaviour {
 
         BlockGroupSystem = GetComponent<BlockGroupSystem>().Init(this);
 
+        Gems = new Gem[def.Width, def.Depth + 2];
+        Gems.Fill(CreateGem);
+
         Coins = new Coin[def.Width, def.Depth + 2];
         Coins.Fill(CreateCoin);
 
-        Gems = new Gem[def.Width, def.Depth + 2];
-        Gems.Fill(CreateGem);
 
 
         return this;
@@ -58,6 +59,7 @@ public class Level : MonoBehaviour {
 
         var cell = new Cell(x, y);
         if (cell == Exit.Cell) return null;
+        if (Gems != null && GetGem(cell)) return null;
 
         return Instantiate(CoinPrefab, transform).Init(cell);
     }
@@ -68,6 +70,7 @@ public class Level : MonoBehaviour {
 
         var cell = new Cell(x, y);
         if (cell == Exit.Cell) return null;
+        if (Coins != null && GetCoin(cell)) return null;
 
         return Instantiate(GemPrefab, transform).Init(cell);
     }
@@ -91,10 +94,12 @@ public class Level : MonoBehaviour {
     }
 
     public Coin GetCoin(Cell cell) {
+        if (Coins == null) return null;
         return Coins[cell.X, cell.Y];
     }
 
     public Gem GetGem(Cell cell) {
+        if (Gems == null) return null;
         return Gems[cell.X, cell.Y];
     }
 
