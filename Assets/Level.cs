@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Damrem.Collections;
 using Damrem.Procedural;
 using UnityEngine;
@@ -16,14 +15,29 @@ public class Level : MonoBehaviour {
         PRNG = new PRNG(Seed);
         Blocks = new Block[Width, Height];
         Blocks.Fill(CreateBlock);
+        Blocks.GetRow(0).ToList().ForEach(DestroyBlock);
+
         return this;
     }
 
     Block CreateBlock(int x, int y) {
-        var block = Instantiate(BlockPrefab).Init(PRNG.InArray(Colors));
+        var block = Instantiate(BlockPrefab).Init(new Cell(x, y), PRNG.InArray(Colors));
         block.name = $"Block-{x}-{y}";
         block.transform.parent = transform;
-        block.transform.position = new Vector2(x, y);
         return block;
+    }
+
+    Block GetBlock(Cell cell) {
+        return Blocks[cell.X, cell.Y];
+    }
+
+    void DestroyBlock(Cell cell) {
+        var block = GetBlock(cell);
+        Blocks[cell.X, cell.Y] = null;
+        Destroy(block.gameObject);
+    }
+
+    void DestroyBlock(Block block) {
+        DestroyBlock(block.Cell);
     }
 }
