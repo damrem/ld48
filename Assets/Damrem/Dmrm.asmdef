@@ -1,0 +1,16 @@
+{
+    "name": "Damrem",
+    "rootNamespace": "",
+    "references": [
+        "GUID:fef2fa68cf816f64dbd15456a34b6ca3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
