@@ -1,8 +1,10 @@
 using System;
+using System.Linq;
 using Damrem.Collections;
 using Damrem.Procedural;
 using UnityEngine;
 
+[RequireComponent(typeof(BlockGroupSystem))]
 [RequireComponent(typeof(PlayerMovementSystem))]
 [RequireComponent(typeof(PlayerGravitySystem))]
 public class Level : MonoBehaviour {
@@ -15,6 +17,7 @@ public class Level : MonoBehaviour {
 
     PRNG PRNG;
     Block[,] Blocks;
+    BlockGroupSystem BlockGroupSystem;
     public Level Init(int index, LevelDef def, Block blockPrefab, Exit exitPrefab, int seed, Color[] colors) {
         Def = def;
         PRNG = new PRNG(seed);
@@ -26,8 +29,9 @@ public class Level : MonoBehaviour {
 
         Blocks.GetRow(0).ToList().ForEach(DestroyBlock);
         AddBottom();
-
         AddExit();
+
+        BlockGroupSystem = GetComponent<BlockGroupSystem>().Init(this);
 
         return this;
     }
@@ -47,7 +51,8 @@ public class Level : MonoBehaviour {
     }
 
     Block CreateBlock(int x, int y) {
-        var block = Instantiate(BlockPrefab).Init(new Cell(x, y), PRNG.InArray(Colors));
+        var type = PRNG.Int(Colors.Length);
+        var block = Instantiate(BlockPrefab).Init(new Cell(x, y), type, Colors[type]);
         block.name = $"Block-{x}-{y}";
         block.transform.parent = transform;
         return block;
@@ -70,7 +75,41 @@ public class Level : MonoBehaviour {
         DestroyBlock(block.Cell);
     }
 
+    public void DestroyGroup(Block block) {
+        if (block.IsUnbreakable) return;
+
+        var group = BlockGroupSystem.GroupFrom(block).ToList();
+
+        group.ForEach(DestroyBlock);
+    }
+
     public Block[] GetColumn(int x) {
         return Blocks.GetColumn(x);
+    }
+
+    public Block LeftBlock(Cell cell) {
+        if (cell.X <= 0) return null;
+
+        return GetBlock(cell + Vector2Int.left);
+    }
+
+    public Block RightBlock(Cell cell) {
+        Debug.Log("RightBlock " + cell);
+        Debug.Log("Width " + Def.Width);
+        if (cell.X >= Def.Width - 1) return null;
+
+        return GetBlock(cell + Vector2Int.right);
+    }
+
+    public Block UpBlock(Cell coord) {
+        if (coord.Y <= 0) return null;
+
+        return GetBlock(coord + Vector2Int.down);
+    }
+
+    public Block DownBlock(Cell coord) {
+        if (coord.Y >= Def.Depth) return null;
+
+        return GetBlock(coord + Vector2Int.up);
     }
 }

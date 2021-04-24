@@ -5,7 +5,9 @@ using UnityEngine;
 public class Block : MonoBehaviour {
     public Cell Cell { get { return GetComponent<CellPosition>().Cell; } }
     public bool IsUnbreakable { get; private set; } = false;
-    public Block Init(Cell cell, Color color) {
+    public int Type { get; private set; }
+    public Block Init(Cell cell, int type, Color color) {
+        Type = type;
         GetComponent<CellPosition>().Init(cell);
         SetColor(color);
         return this;
@@ -16,7 +18,12 @@ public class Block : MonoBehaviour {
     }
 
     public void SetUnbreakable() {
+        Type = -1;
         IsUnbreakable = true;
         SetColor(Color.gray);
+    }
+
+    public override string ToString() {
+        return name;
     }
 }

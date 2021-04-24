@@ -18,7 +18,7 @@ public class PlayerMovementSystem : MonoBehaviour {
 
         var targetBlock = Level.GetBlock(targetCell);
 
-        if (targetBlock) Level.DestroyBlock(targetBlock);
+        if (targetBlock) Level.DestroyGroup(targetBlock);
         else Player.MoveToCell(targetCell);
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using Damrem.System;
 using UnityEngine;
 
@@ -42,7 +41,4 @@ public struct Cell {
     public override int GetHashCode() {
         return HashCodeHelper.CombineHashCodes(X, Y);
     }
-
-
-
 }

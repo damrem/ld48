@@ -33,7 +33,6 @@ public class Player : MonoBehaviour {
 
         var offset = (int)value.Get<float>();
         if (offset == 0) return;
-        Debug.Log("OnHorizontalMove " + offset);
 
         OnMovementRequired.Invoke(new Vector2Int(offset, 0));
     }
@@ -44,7 +43,6 @@ public class Player : MonoBehaviour {
         var offset = (int)value.Get<float>();
         if (offset == 0) return;
 
-        Debug.Log("OnVerticalMove " + offset);
         OnMovementRequired.Invoke(new Vector2Int(0, offset));
     }
 
@@ -55,7 +53,6 @@ public class Player : MonoBehaviour {
     }
 
     IEnumerator AnimateMove(Cell cell) {
-        Debug.Log("AnimatedMove " + cell);
         IsMoving = true;
         var from = transform.position;
         var to = cell.ToWorldPosition();
