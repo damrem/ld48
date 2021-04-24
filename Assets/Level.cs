@@ -6,22 +6,18 @@ using Damrem.Procedural;
 using UnityEngine;
 
 [RequireComponent(typeof(BlockGroupSystem))]
-[RequireComponent(typeof(ExitSystem))]
-[RequireComponent(typeof(PlayerMovementSystem))]
-[RequireComponent(typeof(PlayerGravitySystem))]
 public class Level : MonoBehaviour {
     public event Action OnBlockDestroyed;
     public LevelDef Def { get; private set; }
     public Exit Exit { get; private set; }
+    public Coin[,] Coins { get; private set; }
     Color[] Colors;
     Block BlockPrefab;
     Exit ExitPrefab;
     Coin CoinPrefab;
-    List<Coin> Coins;
     PRNG PRNG;
     Block[,] Blocks;
     BlockGroupSystem BlockGroupSystem;
-    IEnumerable<Block> BottomBlocks;
     public Level Init(LevelDef def, Block blockPrefab, Exit exitPrefab, Coin coinPrefab, int seed, Color[] colors) {
         Def = def;
         PRNG = new PRNG(seed);
@@ -33,35 +29,30 @@ public class Level : MonoBehaviour {
         Blocks.Fill((x, y) => CreateBlock(x, y, true));
 
         Blocks.GetRow(0).ToList().FindAll(block => block != null).ForEach(DestroyBlock);
-        BottomBlocks = CreateBottom();
+        CreateBottom();
         Exit = CreateExit();
 
         BlockGroupSystem = GetComponent<BlockGroupSystem>().Init(this);
 
-        Coins = CreateCoins(Def.CoinDensity);
+        Coins = new Coin[def.Width, def.Depth + 2];
+        Coins.Fill(CreateCoin);
 
         return this;
     }
 
     public void Clear() {
         OnBlockDestroyed = default;
-        Coins?.Clear();
         Destroy(gameObject);
     }
 
-    List<Coin> CreateCoins(float density) {
-        return Blocks
-            .GetFlattened()
-            .Except(BottomBlocks)
-            .Except(Blocks.GetRow(0))//FIXME: don't work as expected (not important)
-            .ToList()
-            .FindAll(_ => PRNG.Bool(density))
-            .Map(block => block.Cell)
-            .Map(CreateCoin);
-    }
+    Coin CreateCoin(int x, int y) {
+        if (y == 0) return null;
+        if (!PRNG.Bool(Def.CoinDensity)) return null;
 
-    Coin CreateCoin(Cell cell) {
-        return Instantiate(CoinPrefab, transform).Init();
+        var cell = new Cell(x, y);
+        if (cell == Exit.Cell) return null;
+
+        return Instantiate(CoinPrefab, transform).Init(cell);
     }
 
     IEnumerable<Block> CreateBottom() {
@@ -72,6 +63,14 @@ public class Level : MonoBehaviour {
             Blocks[x, Def.Depth + 1] = block;
         }
         return Blocks.GetRow(Blocks.GetLength(1) - 1);
+    }
+
+    public void RemoveCoin(Coin coin) {
+        Coins[coin.Cell.X, coin.Cell.Y] = null;
+    }
+
+    public Coin GetCoin(Cell cell) {
+        return Coins[cell.X, cell.Y];
     }
 
     Exit CreateExit() {

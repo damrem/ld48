@@ -2,6 +2,10 @@ using Cinemachine;
 using Damrem.Procedural;
 using UnityEngine;
 
+[RequireComponent(typeof(ExitSystem))]
+[RequireComponent(typeof(PlayerPickCoinSystem))]
+[RequireComponent(typeof(PlayerMovementSystem))]
+[RequireComponent(typeof(PlayerGravitySystem))]
 public class GameManager : MonoBehaviour {
     public int Seed = 0;
     public Player PlayerPrefab;
@@ -15,6 +19,8 @@ public class GameManager : MonoBehaviour {
     int CurrentLevelIndex = 0;
     Level CurrentLevel;
     Player Player;
+    // HUD HUD;
+    int CoinCount = 0;
 
     void Start() {
         Init();
@@ -41,11 +47,17 @@ public class GameManager : MonoBehaviour {
 
         CurrentLevel = CreateLevel(CurrentLevelIndex++);
         Player = CreatePlayer(new Cell(PRNG.Int(CurrentLevel.Def.Width), 0));
-        GetComponentInChildren<PlayerMovementSystem>().Init(CurrentLevel, Player);
-        GetComponentInChildren<PlayerGravitySystem>().Init(CurrentLevel, Player);
-        GetComponentInChildren<ExitSystem>().Init(CurrentLevel, Player, NextLevel);
+        GetComponent<PlayerMovementSystem>().Init(CurrentLevel, Player);
+        GetComponent<PlayerGravitySystem>().Init(CurrentLevel, Player);
+        GetComponent<PlayerPickCoinSystem>().Init(CurrentLevel, Player, PickUpCoin);
+        GetComponent<ExitSystem>().Init(CurrentLevel, Player, NextLevel);
 
         SetupCamera(Player.transform, CurrentLevel.Def.Width);
+    }
+
+    void PickUpCoin() {
+        Debug.Log("PickUpCoin");
+        CoinCount++;
     }
 
     void SetupCamera(Transform target, int size) {
