@@ -21,20 +21,27 @@ public class Level : MonoBehaviour {
         BlockPrefab = blockPrefab;
         ExitPrefab = exitPrefab;
         Colors = colors;
-        Blocks = new Block[def.Width, def.Depth];
+        Blocks = new Block[def.Width, def.Depth + 2];
         Blocks.Fill(CreateBlock);
 
         Blocks.GetRow(0).ToList().ForEach(DestroyBlock);
+        AddBottom();
 
         AddExit();
 
         return this;
     }
 
+    void AddBottom() {
+        Blocks.GetRow(Def.Depth + 1).ToList().ForEach(block => {
+            block.SetUnbreakable();
+        });
+    }
+
     void AddExit() {
         var exit = Instantiate(ExitPrefab);
         exit.transform.SetParent(transform);
-        var cell = new Cell(PRNG.Int(Def.Width), Def.Depth - 1);
+        var cell = new Cell(PRNG.Int(Def.Width), Def.Depth);
         DestroyBlock(cell);
         exit.GetComponent<Exit>().Init(cell);
     }
@@ -58,6 +65,8 @@ public class Level : MonoBehaviour {
     }
 
     public void DestroyBlock(Block block) {
+        if (block.IsUnbreakable) return;
+
         DestroyBlock(block.Cell);
     }
 

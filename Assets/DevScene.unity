@@ -255,7 +255,7 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 1, a: 0}
   LevelDefs:
   - Width: 5
-    Depth: 15
+    Depth: 4
   - Width: 6
     Depth: 36
   - Width: 7
