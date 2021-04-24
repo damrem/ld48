@@ -3,23 +3,34 @@ using Damrem.Collections;
 using Damrem.Procedural;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerMovementSystem))]
+[RequireComponent(typeof(PlayerGravitySystem))]
 public class Level : MonoBehaviour {
     public event Action OnBlockDestroyed;
-    public Color[] Colors;
-    public Block BlockPrefab;
-    public int Width;
-    public int Height;
-    public int Seed = 0;
+    public event Action OnComplete;
+    public LevelDef Def { get; private set; }
+    Color[] Colors;
+    Block BlockPrefab;
 
     PRNG PRNG;
     Block[,] Blocks;
-    public Level Init() {
-        PRNG = new PRNG(Seed);
-        Blocks = new Block[Width, Height];
+    public Level Init(int index, LevelDef def, Block blockPrefab, int seed, Color[] colors) {
+        Def = def;
+        PRNG = new PRNG(seed);
+        BlockPrefab = blockPrefab;
+        Colors = colors;
+        Blocks = new Block[def.Width, def.Depth];
         Blocks.Fill(CreateBlock);
+
         Blocks.GetRow(0).ToList().ForEach(DestroyBlock);
 
+        AddStair();
+
         return this;
+    }
+
+    void AddStair() {
+
     }
 
     Block CreateBlock(int x, int y) {

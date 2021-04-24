@@ -14,7 +14,7 @@ public class PlayerMovementSystem : MonoBehaviour {
         if (direction.y < 0) return;
 
         var targetCell = Player.Cell + direction;
-        if (targetCell.X < 0 || targetCell.X >= Level.Width) return;
+        if (targetCell.X < 0 || targetCell.X >= Level.Def.Width) return;
 
         var targetBlock = Level.GetBlock(targetCell);
 
