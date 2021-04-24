@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Damrem.Collections;
 using Damrem.Procedural;
@@ -15,39 +16,62 @@ public class Level : MonoBehaviour {
     Color[] Colors;
     Block BlockPrefab;
     Exit ExitPrefab;
+    Coin CoinPrefab;
+    List<Coin> Coins;
     PRNG PRNG;
     Block[,] Blocks;
     BlockGroupSystem BlockGroupSystem;
-    public Level Init(int index, LevelDef def, Block blockPrefab, Exit exitPrefab, int seed, Color[] colors) {
+    IEnumerable<Block> BottomBlocks;
+    public Level Init(LevelDef def, Block blockPrefab, Exit exitPrefab, Coin coinPrefab, int seed, Color[] colors) {
         Def = def;
         PRNG = new PRNG(seed);
         BlockPrefab = blockPrefab;
         ExitPrefab = exitPrefab;
+        CoinPrefab = coinPrefab;
         Colors = colors;
         Blocks = new Block[def.Width, def.Depth + 2];
         Blocks.Fill((x, y) => CreateBlock(x, y, true));
 
         Blocks.GetRow(0).ToList().FindAll(block => block != null).ForEach(DestroyBlock);
-        AddBottom();
+        BottomBlocks = CreateBottom();
         Exit = CreateExit();
 
         BlockGroupSystem = GetComponent<BlockGroupSystem>().Init(this);
+
+        Coins = CreateCoins(Def.CoinDensity);
 
         return this;
     }
 
     public void Clear() {
         OnBlockDestroyed = default;
+        Coins?.Clear();
         Destroy(gameObject);
     }
 
-    void AddBottom() {
+    List<Coin> CreateCoins(float density) {
+        return Blocks
+            .GetFlattened()
+            .Except(BottomBlocks)
+            .Except(Blocks.GetRow(0))//FIXME: don't work as expected (not important)
+            .ToList()
+            .FindAll(_ => PRNG.Bool(density))
+            .Map(block => block.Cell)
+            .Map(CreateCoin);
+    }
+
+    Coin CreateCoin(Cell cell) {
+        return Instantiate(CoinPrefab, transform).Init();
+    }
+
+    IEnumerable<Block> CreateBottom() {
         Blocks.GetRow(Def.Depth + 1).ToList().FindAll(block => block != null).ForEach(DestroyBlock);
         for (int x = 0; x < Def.Width; x++) {
             var block = CreateBlock(x, Def.Depth + 1, true);
             block.SetUnbreakable();
             Blocks[x, Def.Depth + 1] = block;
         }
+        return Blocks.GetRow(Blocks.GetLength(1) - 1);
     }
 
     Exit CreateExit() {

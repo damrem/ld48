@@ -250,6 +250,7 @@ MonoBehaviour:
   PlayerPrefab: {fileID: 4325701394354553241, guid: 999eda3c4e56c4443969e72645a4ffa8, type: 3}
   BlockPrefab: {fileID: 961800989488291005, guid: de794982f163ecd4ab190f12b6f6754c, type: 3}
   ExitPrefab: {fileID: 7254686373218765644, guid: 654b7086cffb5524dbe9a44f7cb486ba, type: 3}
+  CoinPrefab: {fileID: -9121832172927395264, guid: 587ce3274a772ea45974cdedc5afb4a4, type: 3}
   Colors:
   - {r: 1, g: 0, b: 0, a: 0}
   - {r: 0, g: 1, b: 0, a: 0}
@@ -258,33 +259,43 @@ MonoBehaviour:
   - Width: 5
     Depth: 4
     BlockDensity: 1
+    CoinDensity: 0.1
   - Width: 6
     Depth: 36
     BlockDensity: 0.25
+    CoinDensity: 0.1
   - Width: 7
     Depth: 49
     BlockDensity: 0.75
+    CoinDensity: 0.1
   - Width: 8
     Depth: 64
     BlockDensity: 0.5
+    CoinDensity: 0.1
   - Width: 0
     Depth: 0
     BlockDensity: 0.75
+    CoinDensity: 0.1
   - Width: 0
     Depth: 0
     BlockDensity: 0.75
+    CoinDensity: 0.1
   - Width: 0
     Depth: 0
     BlockDensity: 0.75
+    CoinDensity: 0.1
   - Width: 0
     Depth: 0
     BlockDensity: 0.75
+    CoinDensity: 0.1
   - Width: 0
     Depth: 0
     BlockDensity: 0.75
+    CoinDensity: 0.1
   - Width: 0
     Depth: 0
     BlockDensity: 0.75
+    CoinDensity: 0.1
 --- !u!4 &50514582
 Transform:
   m_ObjectHideFlags: 0

@@ -23,7 +23,10 @@ public class GameManager : MonoBehaviour {
     Level CreateLevel(int index) {
         var entity = new GameObject($"Level-{index}");
         entity.transform.SetParent(transform);
-        var level = entity.AddComponent<Level>().Init(index, LevelDefs[index], BlockPrefab, ExitPrefab, Seed, Colors);
+
+        var level = entity.AddComponent<Level>()
+        .Init(LevelDefs[index], BlockPrefab, ExitPrefab, CoinPrefab, Seed, Colors);
+
         return level;
     }
 
