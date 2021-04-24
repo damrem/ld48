@@ -8,7 +8,7 @@ public class PlayerMovementSystem : MonoBehaviour {
     public PlayerMovementSystem Init(Level level, Player player, Action<EnergySpendingType> onEnergySpent) {
         Level = level;
         Player = player;
-        player.OnMovementRequired += OnMovementRequired;
+        player.Walker.OnMovementRequired += OnMovementRequired;
         OnEnergySpent = onEnergySpent;
         return this;
     }
@@ -27,7 +27,7 @@ public class PlayerMovementSystem : MonoBehaviour {
         }
         else {
             OnEnergySpent.Invoke(EnergySpendingType.Walk);
-            Player.MoveToCell(targetCell);
+            Player.Walker.MoveToCell(targetCell);
         }
     }
 }

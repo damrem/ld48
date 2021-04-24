@@ -394,6 +394,8 @@ MonoBehaviour:
   EnergyBar: {fileID: 2055890390}
   LevelTitle: {fileID: 1402946390}
   EnergyRefill: 10
+  EnergyWalkCost: 1
+  EnergyDigCost: 3
   Colors:
   - {r: 1, g: 0, b: 0, a: 0}
   - {r: 0, g: 1, b: 0, a: 0}

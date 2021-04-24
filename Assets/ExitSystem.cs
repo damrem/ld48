@@ -9,7 +9,7 @@ public class ExitSystem : MonoBehaviour {
         Level = level;
         Player = player;
         OnPlayerReachedExit = onPlayerReachedExit;
-        Player.OnMoved += CheckIfPlayerHasExitted;
+        Player.Walker.OnMoved += CheckIfPlayerHasExitted;
         return this;
     }
 

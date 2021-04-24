@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
     public EnergyBar EnergyBar;
     public LevelTitle LevelTitle;
     public int EnergyRefill = 10;
+    public int EnergyWalkCost = 1;
+    public int EnergyDigCost = 3;
     public Color[] Colors;
     public LevelDef[] LevelDefs;
 
@@ -114,11 +116,15 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
     void SpendEnergy(EnergySpendingType spendingType) {
         int value;
         switch (spendingType) {
-            case EnergySpendingType.Dig: value = 5; break;
-            case EnergySpendingType.Walk: value = 1; break;
+            case EnergySpendingType.Dig: value = EnergyDigCost; break;
+            case EnergySpendingType.Walk: value = EnergyWalkCost; break;
             default: value = 1; break;
         }
         EnergyBar.Decrement(value);
+    }
+
+    void GameOver() {
+
     }
 
     void SetupCamera(Transform target, int size) {
