@@ -259,6 +259,10 @@ namespace Damrem.Collections {
         public static List<int> FindAllIndexes<T>(this List<T> list, Predicate<T> match) {
             return list.FindAll(match).Map(item => list.IndexOf(item));
         }
+
+        public static List<T> GetRangeFrom<T>(this List<T> list, int from) {
+            return list.GetRange(from, list.Count - from);
+        }
     }
 
 

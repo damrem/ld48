@@ -1,8 +1,10 @@
+using System;
 using Damrem.Collections;
 using Damrem.Procedural;
 using UnityEngine;
 
 public class Level : MonoBehaviour {
+    public event Action OnBlockDestroyed;
     public Color[] Colors;
     public Block BlockPrefab;
     public int Width;
@@ -35,9 +37,14 @@ public class Level : MonoBehaviour {
         var block = GetBlock(cell);
         Blocks[cell.X, cell.Y] = null;
         Destroy(block.gameObject);
+        OnBlockDestroyed?.Invoke();
     }
 
     public void DestroyBlock(Block block) {
         DestroyBlock(block.Cell);
+    }
+
+    public Block[] GetColumn(int x) {
+        return Blocks.GetColumn(x);
     }
 }

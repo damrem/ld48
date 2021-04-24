@@ -1,3 +1,4 @@
+using Damrem.System;
 using UnityEngine;
 
 public struct Cell {
@@ -25,8 +26,26 @@ public struct Cell {
         return new Cell(a.ToPosition() + b);
     }
 
+    public override bool Equals(object obj) {
+        return this == (Cell)obj;
+    }
+
+    public static bool operator ==(Cell a, Cell b) {
+        return a.X == b.X && a.Y == b.Y;
+    }
+
+    public static bool operator !=(Cell a, Cell b) {
+        return a.X != b.X || a.Y != b.Y;
+    }
+
     public override string ToString() {
         return $"{base.ToString()}: X={X}, Y={Y}";
     }
+
+    public override int GetHashCode() {
+        return HashCodeHelper.CombineHashCodes(X, Y);
+    }
+
+
 
 }

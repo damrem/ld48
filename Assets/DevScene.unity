@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 50514582}
   - component: {fileID: 50514581}
   - component: {fileID: 50514583}
+  - component: {fileID: 50514584}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -179,6 +180,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e60682a1a8ff0bd458c13ea07d9a5587, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &50514584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50514580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b894a03f2f41c942af343338c9e4c7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &188315838
@@ -346,7 +359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActionAsset: {fileID: -944628639613478452, guid: 142853a0048a40542a1d5daae4e322ba, type: 3}
-  MovePeriod: 0.5
+  MoveDuration: 0.5
 --- !u!58 &497695785
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -450,7 +463,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: PlayerControlScheme
+  m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerActionMap
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}

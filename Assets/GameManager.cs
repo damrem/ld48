@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
         var level = GetComponentInChildren<Level>().Init();
         var player = GetComponentInChildren<Player>().Init(new Cell(3, 0));
         var playerMovementSystem = GetComponent<PlayerMovementSystem>().Init(level, player);
+        var playerGravitySystem = GetComponent<PlayerGravitySystem>().Init(level, player);
     }
 
     void Update() {
