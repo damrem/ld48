@@ -1,9 +1,11 @@
+using System;
 using Damrem.System;
 using UnityEngine;
 
+[Serializable]
 public struct Cell {
-    public readonly int X;
-    public readonly int Y;
+    public int X;
+    public int Y;
     public Cell(int x, int y) {
         X = x;
         Y = y;
@@ -14,16 +16,12 @@ public struct Cell {
         Y = position.y;
     }
 
-    public Vector2Int ToPosition() {
-        return new Vector2Int(X, -Y);
-    }
-
-    public Vector3 ToVector3() {
+    public Vector3 ToWorldPosition() {
         return new Vector3(X, -Y);
     }
 
     public static Cell operator +(Cell a, Vector2Int b) {
-        return new Cell(a.ToPosition() + b);
+        return new Cell(a.X + b.x, a.Y + b.y);
     }
 
     public override bool Equals(object obj) {

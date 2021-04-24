@@ -58,7 +58,7 @@ public class Player : MonoBehaviour {
         Debug.Log("AnimatedMove " + cell);
         IsMoving = true;
         var from = transform.position;
-        var to = cell.ToVector3();
+        var to = cell.ToWorldPosition();
         float elapsed = 0;
         while (elapsed < MoveDuration) {
             elapsed += Time.deltaTime;

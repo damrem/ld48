@@ -11,8 +11,9 @@ public class PlayerMovementSystem : MonoBehaviour {
     }
 
     void OnMovementRequired(Vector2Int direction) {
+        Debug.Log(Player.Cell + " " + direction);
         var targetCell = Player.Cell + direction;
-        Debug.Log((targetCell.X + " " + Level.Width));
+        Debug.Log((targetCell + " " + Level.Width));
         if (targetCell.X < 0 || targetCell.X >= Level.Width) return;
 
         var targetBlock = Level.GetBlock(targetCell);
