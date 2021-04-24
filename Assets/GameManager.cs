@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour {
     public Gem GemPrefab;
     public Purse Purse;
     public EnergyBar EnergyBar;
+    public int EnergyRefill = 10;
     public Color[] Colors;
     public LevelDef[] LevelDefs;
 
@@ -81,7 +82,7 @@ public class GameManager : MonoBehaviour {
 
     void PickUpGem() {
         Debug.Log("PickUpCoin");
-        EnergyBar.Increment();
+        EnergyBar.Increment(EnergyRefill);
     }
 
     void SpendEnergy(EnergySpendingType spendingType) {

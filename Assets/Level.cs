@@ -82,16 +82,20 @@ public class Level : MonoBehaviour {
         return Blocks.GetRow(Blocks.GetLength(1) - 1);
     }
 
-    public void RemoveCoin(Coin coin) {
-        Coins[coin.Cell.X, coin.Cell.Y] = null;
+    public void RemoveCoin(Coin item) {
+        Coins[item.Cell.X, item.Cell.Y] = null;
+    }
+
+    public void RemoveGem(Gem item) {
+        Gems[item.Cell.X, item.Cell.Y] = null;
     }
 
     public Coin GetCoin(Cell cell) {
         return Coins[cell.X, cell.Y];
     }
 
-    public Coin GetGem(Cell cell) {
-        return Coins[cell.X, cell.Y];
+    public Gem GetGem(Cell cell) {
+        return Gems[cell.X, cell.Y];
     }
 
     Exit CreateExit() {

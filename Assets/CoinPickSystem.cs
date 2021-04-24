@@ -15,7 +15,6 @@ public class CoinPickSystem : MonoBehaviour {
     }
 
     void CheckIfHasTouched(MoveType _) {
-        Debug.Log("CheckIfHasTouched");
         var item = Level.GetCoin(Player.Cell);
         if (!item) return;
 

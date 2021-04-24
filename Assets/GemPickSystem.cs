@@ -17,14 +17,15 @@ public class GemPickSystem : MonoBehaviour {
     void CheckIfHasTouched(MoveType _) {
         Debug.Log("CheckIfHasTouched");
         var item = Level.GetGem(Player.Cell);
+        Debug.Log(item);
         if (!item) return;
 
         Pick(item);
     }
 
-    void Pick(Coin coin) {
-        Level.RemoveCoin(coin);
-        coin.Pick();
+    void Pick(Gem item) {
+        Level.RemoveGem(item);
+        item.Pick();
         OnTouched?.Invoke();
 
     }
