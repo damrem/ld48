@@ -1,5 +1,4 @@
 using System;
-using Damrem.Collections;
 using UnityEngine;
 
 public class PlayerPickCoinSystem : MonoBehaviour {

@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour {
     public Block BlockPrefab;
     public Exit ExitPrefab;
     public Coin CoinPrefab;
+    public Purse Purse;
     public Color[] Colors;
     public LevelDef[] LevelDefs;
 
@@ -19,8 +20,6 @@ public class GameManager : MonoBehaviour {
     int CurrentLevelIndex = 0;
     Level CurrentLevel;
     Player Player;
-    // HUD HUD;
-    int CoinCount = 0;
 
     void Start() {
         Init();
@@ -57,7 +56,7 @@ public class GameManager : MonoBehaviour {
 
     void PickUpCoin() {
         Debug.Log("PickUpCoin");
-        CoinCount++;
+        Purse.Increment();
     }
 
     void SetupCamera(Transform target, int size) {
