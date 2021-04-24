@@ -12,7 +12,9 @@ public class PlayerMovementSystem : MonoBehaviour {
 
     void OnMovementRequired(Vector2Int direction) {
         var targetCell = Player.Cell + direction;
+        Debug.Log((targetCell.X + " " + Level.Width));
         if (targetCell.X < 0 || targetCell.X >= Level.Width) return;
+
         Player.MoveToCell(targetCell);
     }
 }

@@ -24,4 +24,9 @@ public struct Cell {
     public static Cell operator +(Cell a, Vector2Int b) {
         return new Cell(a.ToPosition() + b);
     }
+
+    public override string ToString() {
+        return $"{base.ToString()}: X={X}, Y={Y}";
+    }
+
 }

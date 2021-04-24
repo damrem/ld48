@@ -30,14 +30,22 @@ public class Player : MonoBehaviour {
 
     void OnHorizontalMove(InputValue value) {
         if (IsMoving) return;
-        Debug.Log("OnHorizontalMove " + value.Get<float>());
-        OnMovementRequired.Invoke(new Vector2Int((int)value.Get<float>(), 0));
+
+        var offset = (int)value.Get<float>();
+        if (offset == 0) return;
+        Debug.Log("OnHorizontalMove " + offset);
+
+        OnMovementRequired.Invoke(new Vector2Int(offset, 0));
     }
 
     void OnVerticalMove(InputValue value) {
         if (IsMoving) return;
-        Debug.Log("OnVerticalMove " + value.Get<float>());
-        OnMovementRequired.Invoke(new Vector2Int(0, (int)value.Get<float>()));
+
+        var offset = (int)value.Get<float>();
+        if (offset == 0) return;
+
+        Debug.Log("OnVerticalMove " + offset);
+        OnMovementRequired.Invoke(new Vector2Int(0, offset));
     }
 
     public void MoveToCell(Cell cell) {
@@ -47,6 +55,7 @@ public class Player : MonoBehaviour {
     }
 
     IEnumerator AnimateMove(Cell cell) {
+        Debug.Log("AnimatedMove " + cell);
         IsMoving = true;
         var from = transform.position;
         var to = cell.ToVector3();
