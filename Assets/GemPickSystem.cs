@@ -15,9 +15,7 @@ public class GemPickSystem : MonoBehaviour {
     }
 
     void CheckIfHasTouched(MoveType _) {
-        Debug.Log("CheckIfHasTouched");
         var item = Level.GetGem(Player.Cell);
-        Debug.Log(item);
         if (!item) return;
 
         Pick(item);

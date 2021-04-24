@@ -157,8 +157,6 @@ public class Level : MonoBehaviour {
     }
 
     public Block RightBlock(Cell cell) {
-        Debug.Log("RightBlock " + cell);
-        Debug.Log("Width " + Def.Width);
         if (cell.X >= Def.Width - 1) return null;
 
         return GetBlock(cell + Vector2Int.right);

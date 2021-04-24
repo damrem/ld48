@@ -92,12 +92,10 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
     }
 
     void PickUpCoin() {
-        Debug.Log("PickUpCoin");
         Purse.Increment();
     }
 
     void PickUpGem() {
-        Debug.Log("PickUpGem");
         EnergyBar.Increment(EnergyRefill);
     }
 

@@ -19,7 +19,6 @@ public class EnergyBar : MonoBehaviour {
     }
 
     public void Decrement(int value = 1) {
-        Debug.Log("decrement");
         SetValue(Value - value);
     }
 

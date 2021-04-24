@@ -10,7 +10,6 @@ public class BlockGroupSystem : MonoBehaviour {
     }
 
     public HashSet<Block> GroupFrom(Block block) {
-        Debug.Log("GroupFrom " + block);
         var blocks = new HashSet<Block>();
         GroupFrom(block.Cell, block.Type, blocks, null);
         return blocks;

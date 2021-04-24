@@ -1,8 +1,5 @@
-- platformer descente
-  - format
-    - 2d
-    - 3d
-  - skill
+- enemy
+
   - upgrades
     - chance
       - proba drop énergie
@@ -21,5 +18,6 @@
   - enemies
     - bats
     - grunts
+
 - expansion vers le bas
 -
