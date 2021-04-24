@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour {
     }
 
     void NextLevel() {
-        if (CurrentLevel) CurrentLevel.Clear();
+        Clear();
 
         CurrentLevel = CreateLevel(CurrentLevelIndex++);
         Player = CreatePlayer(new Cell(PRNG.Int(CurrentLevel.Def.Width), 0));
