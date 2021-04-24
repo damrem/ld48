@@ -6,11 +6,9 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(CellPosition))]
 public class Player : MonoBehaviour {
-    enum MoveType { Walk, Fall }
     public event Action<Vector2Int> OnMovementRequired;
-    public event Action OnWalked;
+    public event Action<MoveType> OnMoved;
     public Cell Cell { get { return GetComponent<CellPosition>().Cell; } }
-    public InputActionAsset ActionAsset;
     public float MoveDuration = .5f;
     bool IsMoving = false;
 
@@ -22,6 +20,12 @@ public class Player : MonoBehaviour {
         StartCoroutine(Enable(playerInput));
 
         return this;
+    }
+
+    public void Clear() {
+        OnMovementRequired = default;
+        OnMoved = default;
+        Destroy(gameObject);
     }
 
     IEnumerator Enable(PlayerInput playerInput) {
@@ -68,6 +72,6 @@ public class Player : MonoBehaviour {
         }
         GetComponent<CellPosition>().SetCell(cell);
         IsMoving = false;
-        if (moveType == MoveType.Walk) OnWalked?.Invoke();
+        OnMoved?.Invoke(moveType);
     }
 }

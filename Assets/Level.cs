@@ -5,16 +5,16 @@ using Damrem.Procedural;
 using UnityEngine;
 
 [RequireComponent(typeof(BlockGroupSystem))]
+[RequireComponent(typeof(ExitSystem))]
 [RequireComponent(typeof(PlayerMovementSystem))]
 [RequireComponent(typeof(PlayerGravitySystem))]
 public class Level : MonoBehaviour {
     public event Action OnBlockDestroyed;
-    public event Action OnComplete;
     public LevelDef Def { get; private set; }
+    public Exit Exit { get; private set; }
     Color[] Colors;
     Block BlockPrefab;
     Exit ExitPrefab;
-
     PRNG PRNG;
     Block[,] Blocks;
     BlockGroupSystem BlockGroupSystem;
@@ -29,11 +29,16 @@ public class Level : MonoBehaviour {
 
         Blocks.GetRow(0).ToList().ForEach(DestroyBlock);
         AddBottom();
-        AddExit();
+        Exit = CreateExit();
 
         BlockGroupSystem = GetComponent<BlockGroupSystem>().Init(this);
 
         return this;
+    }
+
+    public void Clear() {
+        OnBlockDestroyed = default;
+        Destroy(gameObject);
     }
 
     void AddBottom() {
@@ -42,12 +47,12 @@ public class Level : MonoBehaviour {
         });
     }
 
-    void AddExit() {
+    Exit CreateExit() {
         var exit = Instantiate(ExitPrefab);
         exit.transform.SetParent(transform);
         var cell = new Cell(PRNG.Int(Def.Width), Def.Depth);
         DestroyBlock(cell);
-        exit.GetComponent<Exit>().Init(cell);
+        return exit.GetComponent<Exit>().Init(cell);
     }
 
     Block CreateBlock(int x, int y) {

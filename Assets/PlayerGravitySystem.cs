@@ -8,7 +8,7 @@ public class PlayerGravitySystem : MonoBehaviour {
     public PlayerGravitySystem Init(Level level, Player player) {
         Level = level;
         Player = player;
-        player.OnWalked += CheckFall;
+        player.OnMoved += CheckFall;
         level.OnBlockDestroyed += CheckFall;
         return this;
     }
@@ -26,5 +26,9 @@ public class PlayerGravitySystem : MonoBehaviour {
         if (targetCell == Player.Cell) return;
 
         Player.MoveToCell(targetCell);
+    }
+
+    void CheckFall(MoveType moveType) {
+        CheckFall();
     }
 }
