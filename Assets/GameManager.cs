@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(ExitSystem))]
 [RequireComponent(typeof(CoinPickSystem))]
-[RequireComponent(typeof(GemPickSystem))]
+// [RequireComponent(typeof(GemPickSystem))]
 [RequireComponent(typeof(PlayerMovementSystem))]
 [RequireComponent(typeof(PlayerGravitySystem))]
 public class GameManager : MonoBehaviour, IPointerClickHandler {
@@ -80,15 +80,29 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
     }
 
     void NextLevel() {
+
         CurrentLevel = CreateLevel(CurrentLevelIndex);
         Player = CreatePlayer(new Cell(PRNG.Int(CurrentLevel.Def.Width), 0));
+
+        var picker = Player.GetComponent<Picker>();
+        picker.OnTouchedPickable += PickItem;
+
         GetComponent<PlayerMovementSystem>().Init(CurrentLevel, Player, SpendEnergy);
         GetComponent<PlayerGravitySystem>().Init(CurrentLevel, Player);
-        GetComponent<CoinPickSystem>().Init(CurrentLevel, Player, PickUpCoin);
-        GetComponent<GemPickSystem>().Init(CurrentLevel, Player, PickUpGem);
+        GetComponent<CoinPickSystem>().Init(CurrentLevel, picker);
+        // GetComponent<GemPickSystem>().Init(CurrentLevel, Player, PickUpGem);
         GetComponent<ExitSystem>().Init(CurrentLevel, Player, PreNextLevel);
 
         SetupCamera(Player.transform, CurrentLevel.Def.Width);
+    }
+
+    void PickItem(Pickable pickable) {
+        Debug.Log("PickItem " + pickable);
+        switch (pickable.Type) {
+            case PickableType.Coin: PickUpCoin(); break;
+            case PickableType.Gem: PickUpGem(); break;
+            default: break;
+        }
     }
 
     void PickUpCoin() {

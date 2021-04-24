@@ -1,30 +1,28 @@
-using System;
 using UnityEngine;
 
 public class CoinPickSystem : MonoBehaviour {
     Level Level;
-    Player Player;
-    Action OnTouched;
 
-    public CoinPickSystem Init(Level level, Player player, Action onTouched) {
+    public CoinPickSystem Init(Level level, Picker picker) {
+        picker.OnTouchedPickable += Pick;
         Level = level;
-        Player = player;
-        OnTouched = onTouched;
-        player.OnMoved += CheckIfHasTouched;
         return this;
     }
 
-    void CheckIfHasTouched(MoveType _) {
-        var item = Level.GetCoin(Player.Cell);
-        if (!item) return;
+    void Pick(Pickable pickable) {
+        switch (pickable.Type) {
+            case PickableType.Coin:
+                var coin = pickable.GetComponent<Coin>();
+                Level.RemoveCoin(coin);
+                break;
 
-        Pick(item);
-    }
+            case PickableType.Gem:
+                var gem = pickable.GetComponent<Gem>();
+                Level.RemoveGem(gem);
+                break;
 
-    void Pick(Coin coin) {
-        Level.RemoveCoin(coin);
-        coin.Pick();
-        OnTouched?.Invoke();
-
+            default: break;
+        }
+        pickable.Pick();
     }
 }

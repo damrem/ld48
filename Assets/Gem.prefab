@@ -107,6 +107,8 @@ GameObject:
   - component: {fileID: 9201960492175024568}
   - component: {fileID: -3646141011911042403}
   - component: {fileID: -6265699836500785094}
+  - component: {fileID: 1607166263322614492}
+  - component: {fileID: 8547308203871234028}
   m_Layer: 0
   m_Name: Gem
   m_TagString: Untagged
@@ -165,3 +167,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 320e3fa4efa4f2746b48dfa21a64736a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1607166263322614492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9201960492175024569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0e845450e582af42a8cf5f12c197bef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &8547308203871234028
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9201960492175024569}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Center: {x: 0, y: 0, z: 0}

@@ -3,8 +3,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(CellPosition))]
+[RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(Picker))]
 public class Player : MonoBehaviour {
     public event Action<Vector2Int> OnMovementRequired;
     public event Action<MoveType> OnMoved;
