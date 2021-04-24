@@ -27,7 +27,7 @@ public class Level : MonoBehaviour {
         return block;
     }
 
-    Block GetBlock(Cell cell) {
+    public Block GetBlock(Cell cell) {
         return Blocks[cell.X, cell.Y];
     }
 
@@ -37,7 +37,7 @@ public class Level : MonoBehaviour {
         Destroy(block.gameObject);
     }
 
-    void DestroyBlock(Block block) {
+    public void DestroyBlock(Block block) {
         DestroyBlock(block.Cell);
     }
 }

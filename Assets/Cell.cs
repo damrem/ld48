@@ -14,11 +14,11 @@ public struct Cell {
     }
 
     public Vector2Int ToPosition() {
-        return new Vector2Int(X, Y);
+        return new Vector2Int(X, -Y);
     }
 
     public Vector3 ToVector3() {
-        return new Vector3(X, Y);
+        return new Vector3(X, -Y);
     }
 
     public static Cell operator +(Cell a, Vector2Int b) {

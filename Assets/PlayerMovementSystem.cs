@@ -15,6 +15,9 @@ public class PlayerMovementSystem : MonoBehaviour {
         Debug.Log((targetCell.X + " " + Level.Width));
         if (targetCell.X < 0 || targetCell.X >= Level.Width) return;
 
-        Player.MoveToCell(targetCell);
+        var targetBlock = Level.GetBlock(targetCell);
+
+        if (targetBlock) Level.DestroyBlock(targetBlock);
+        else Player.MoveToCell(targetCell);
     }
 }
