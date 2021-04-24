@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class CoinPickSystem : MonoBehaviour {
+public class PickerSystem : MonoBehaviour {
     Level Level;
 
-    public CoinPickSystem Init(Level level, Picker picker) {
+    public PickerSystem Init(Level level, Picker picker) {
         picker.OnTouchedPickable += Pick;
         Level = level;
         return this;

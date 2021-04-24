@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(ExitSystem))]
-[RequireComponent(typeof(CoinPickSystem))]
-// [RequireComponent(typeof(GemPickSystem))]
+[RequireComponent(typeof(PickerSystem))]
 [RequireComponent(typeof(PlayerMovementSystem))]
 [RequireComponent(typeof(PlayerGravitySystem))]
 public class GameManager : MonoBehaviour, IPointerClickHandler {
@@ -89,8 +88,7 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
 
         GetComponent<PlayerMovementSystem>().Init(CurrentLevel, Player, SpendEnergy);
         GetComponent<PlayerGravitySystem>().Init(CurrentLevel, Player);
-        GetComponent<CoinPickSystem>().Init(CurrentLevel, picker);
-        // GetComponent<GemPickSystem>().Init(CurrentLevel, Player, PickUpGem);
+        GetComponent<PickerSystem>().Init(CurrentLevel, picker);
         GetComponent<ExitSystem>().Init(CurrentLevel, Player, PreNextLevel);
 
         SetupCamera(Player.transform, CurrentLevel.Def.Width);
