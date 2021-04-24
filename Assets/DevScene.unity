@@ -257,24 +257,34 @@ MonoBehaviour:
   LevelDefs:
   - Width: 5
     Depth: 4
+    BlockDensity: 1
   - Width: 6
     Depth: 36
+    BlockDensity: 0.25
   - Width: 7
     Depth: 49
+    BlockDensity: 0.75
   - Width: 8
     Depth: 64
+    BlockDensity: 0.5
   - Width: 0
     Depth: 0
+    BlockDensity: 0.75
   - Width: 0
     Depth: 0
+    BlockDensity: 0.75
   - Width: 0
     Depth: 0
+    BlockDensity: 0.75
   - Width: 0
     Depth: 0
+    BlockDensity: 0.75
   - Width: 0
     Depth: 0
+    BlockDensity: 0.75
   - Width: 0
     Depth: 0
+    BlockDensity: 0.75
 --- !u!4 &50514582
 Transform:
   m_ObjectHideFlags: 0

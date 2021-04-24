@@ -25,9 +25,9 @@ public class Level : MonoBehaviour {
         ExitPrefab = exitPrefab;
         Colors = colors;
         Blocks = new Block[def.Width, def.Depth + 2];
-        Blocks.Fill(CreateBlock);
+        Blocks.Fill((x, y) => CreateBlock(x, y, true));
 
-        Blocks.GetRow(0).ToList().ForEach(DestroyBlock);
+        Blocks.GetRow(0).ToList().FindAll(block => block != null).ForEach(DestroyBlock);
         AddBottom();
         Exit = CreateExit();
 
@@ -42,9 +42,12 @@ public class Level : MonoBehaviour {
     }
 
     void AddBottom() {
-        Blocks.GetRow(Def.Depth + 1).ToList().ForEach(block => {
+        Blocks.GetRow(Def.Depth + 1).ToList().FindAll(block => block != null).ForEach(DestroyBlock);
+        for (int x = 0; x < Def.Width; x++) {
+            var block = CreateBlock(x, Def.Depth + 1, true);
             block.SetUnbreakable();
-        });
+            Blocks[x, Def.Depth + 1] = block;
+        }
     }
 
     Exit CreateExit() {
@@ -55,7 +58,9 @@ public class Level : MonoBehaviour {
         return exit.GetComponent<Exit>().Init(cell);
     }
 
-    Block CreateBlock(int x, int y) {
+    Block CreateBlock(int x, int y, bool force = false) {
+        if (!force && !PRNG.Bool(Def.BlockDensity)) return null;
+
         var type = PRNG.Int(Colors.Length);
         var block = Instantiate(BlockPrefab).Init(new Cell(x, y), type, Colors[type]);
         block.name = $"Block-{x}-{y}";

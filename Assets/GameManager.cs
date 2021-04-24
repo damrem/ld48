@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
     public Player PlayerPrefab;
     public Block BlockPrefab;
     public Exit ExitPrefab;
+    public Coin CoinPrefab;
     public Color[] Colors;
     public LevelDef[] LevelDefs;
 
