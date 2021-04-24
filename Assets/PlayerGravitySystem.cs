@@ -1,3 +1,4 @@
+using System.Linq;
 using Damrem.Collections;
 using UnityEngine;
 
@@ -12,19 +13,15 @@ public class PlayerGravitySystem : MonoBehaviour {
     }
 
     void OnBlockDestroyed() {
-        var col = Level.GetColumn(Player.Cell.X);
-
-        var blocksUnderPlayer = col.ToList().GetRangeFrom(Player.Cell.Y);
-
+        var blocksUnderPlayer = Level.GetColumn(Player.Cell.X).ToList().GetRangeFrom(Player.Cell.Y);
         Cell targetCell = Player.Cell;
-        for (int y = Player.Cell.Y + 1; y < col.Length; y++) {
+        for (int y = 0; y < blocksUnderPlayer.Count; y++) {
             var currentBlock = blocksUnderPlayer[y];
             if (currentBlock) {
-                targetCell = new Cell(Player.Cell.X, y - 1);
+                targetCell = new Cell(currentBlock.Cell.X, currentBlock.Cell.Y - 1);
                 break;
             }
         }
-
         if (targetCell == Player.Cell) return;
 
         Player.MoveToCell(targetCell);

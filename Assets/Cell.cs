@@ -2,10 +2,9 @@ using System;
 using Damrem.System;
 using UnityEngine;
 
-[Serializable]
 public struct Cell {
-    public int X;
-    public int Y;
+    public readonly int X;
+    public readonly int Y;
     public Cell(int x, int y) {
         X = x;
         Y = y;
