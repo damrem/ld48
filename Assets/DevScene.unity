@@ -401,9 +401,19 @@ MonoBehaviour:
   - {r: 0, g: 1, b: 0, a: 0}
   - {r: 0, g: 0, b: 1, a: 0}
   LevelDefs:
+  - Width: 3
+    Depth: 9
+    BlockDensity: 0.5
+    CoinDensity: 0.1
+    GemDensity: 0.1
+  - Width: 4
+    Depth: 16
+    BlockDensity: 0.5
+    CoinDensity: 0.1
+    GemDensity: 0.1
   - Width: 5
-    Depth: 4
-    BlockDensity: 1
+    Depth: 25
+    BlockDensity: 0.5
     CoinDensity: 0.1
     GemDensity: 0.1
   - Width: 6
@@ -419,16 +429,6 @@ MonoBehaviour:
   - Width: 8
     Depth: 64
     BlockDensity: 0.5
-    CoinDensity: 0.1
-    GemDensity: 0.1
-  - Width: 0
-    Depth: 0
-    BlockDensity: 0.75
-    CoinDensity: 0.1
-    GemDensity: 0.1
-  - Width: 0
-    Depth: 0
-    BlockDensity: 0.75
     CoinDensity: 0.1
     GemDensity: 0.1
   - Width: 0
@@ -871,6 +871,7 @@ GameObject:
   - component: {fileID: 188315839}
   - component: {fileID: 188315842}
   - component: {fileID: 188315843}
+  - component: {fileID: 188315844}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -936,7 +937,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 188315838}
-  m_LocalRotation: {x: 0.22975291, y: 0.0000000187227, z: -0.0000000044198294, w: 0.973249}
+  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
   m_LocalPosition: {x: 3, y: 13, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -983,7 +984,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 188315838}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
@@ -1010,6 +1011,18 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &188315844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 188315838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48367fe31e0fd82489a54909464d7b36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &753603639
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,7 +1135,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -4, y: -4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &850965752
 MonoBehaviour:
@@ -1137,7 +1150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6745098, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.6745098, g: 0.19607843, b: 0.19607843, a: 0.7490196}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1252,7 +1265,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1110476966
 Transform:
   m_ObjectHideFlags: 0
@@ -1577,7 +1590,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1871526064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1674,7 +1687,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.2509804}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1717,7 +1730,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -8, y: 0}
-  m_SizeDelta: {x: 10, y: -16}
+  m_SizeDelta: {x: 16, y: -16}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!1 &2062193827
 GameObject:

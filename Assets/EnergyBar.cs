@@ -29,7 +29,8 @@ public class EnergyBar : MonoBehaviour {
 
         Value = value;
 
-        var top = -(float)(MaxValue - Value) / MaxValue * Background.rect.height;
-        Gauge.offsetMax = new Vector2(0, top);
+        var top = -(float)(MaxValue - Value) / MaxValue * (Background.rect.height - 4);
+        if (top < 2) top = 2;
+        Gauge.offsetMax = new Vector2(-2, top);
     }
 }

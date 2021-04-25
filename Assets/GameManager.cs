@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
         GetComponent<PickerSystem>().Init(CurrentLevel, picker);
         GetComponent<ExitSystem>().Init(CurrentLevel, Player, PreNextLevel);
 
-        SetupCamera(Player.transform, CurrentLevel.Def.Width);
+        SetupCamera(Player.transform, CurrentLevel);
         CurrentLevelIndex++;
     }
 
@@ -127,10 +127,12 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
 
     }
 
-    void SetupCamera(Transform target, int size) {
-        var camera = GetComponentInChildren<CinemachineVirtualCamera>();
-        camera.Follow = camera.LookAt = target;
-        camera.m_Lens.OrthographicSize = size;
+    void SetupCamera(Transform target, Level level) {
+        Debug.Log("SetupCamera " + target);
+        Camera.main.GetComponent<CameraMan>().Init(target, level);
+        // var camera = GetComponentInChildren<CinemachineVirtualCamera>();
+        // camera.Follow = camera.LookAt = target;
+        // camera.m_Lens.OrthographicSize = size;
     }
 
     // void Update() {
