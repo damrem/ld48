@@ -6,7 +6,6 @@ public class CameraMan : MonoBehaviour {
     Transform Target;
     Level Level;
     public CameraMan Init(Transform target, Level level) {
-        Debug.Log("Init " + target);
         GetComponent<Camera>().orthographicSize = level.Def.Width + .5f;
         Target = target;
         Level = level; ;

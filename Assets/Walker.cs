@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(CellPosition))]
 public class Walker : MonoBehaviour {
-    public event Action<Vector2Int> OnMovementRequired;
+    // public event Action<Vector2Int> OnMovementRequired;
     public event Action<MoveType> OnMoved;
     public Cell Cell { get { return GetComponent<CellPosition>().Cell; } }
     public float MoveDuration = .5f;
@@ -16,16 +16,18 @@ public class Walker : MonoBehaviour {
     }
 
     public void Clear() {
-        OnMovementRequired = default;
+        // OnMovementRequired = default;
         OnMoved = default;
     }
 
-    public void AttemptMove(int x, int y) {
-        OnMovementRequired.Invoke(new Vector2Int(x, y));
-    }
+    // public void AttemptMove(int x, int y) {
+    //     OnMovementRequired.Invoke(new Vector2Int(x, y));
+    // }
 
     public void MoveToCell(Cell cell) {
+        Debug.Log("MoveToCell " + cell);
         if (IsMoving) return;
+        Debug.Log("really MoveToCell " + cell);
 
         var moveType = cell.X != Cell.X ? MoveType.Walk : MoveType.Fall;
 
