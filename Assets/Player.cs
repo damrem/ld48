@@ -40,7 +40,7 @@ public class Player : MonoBehaviour {
     }
 
     void Update() {
-        switch (CallbackContext.action.name) {
+        switch (CallbackContext.action?.name) {
             case "HorizontalMove": HandleHorizontalMove(); break;
             case "VerticalMove": HandleVerticalMove(); break;
         }
