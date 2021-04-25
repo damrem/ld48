@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(CellPosition))]
@@ -21,6 +23,18 @@ public class Block : MonoBehaviour {
         Type = -1;
         IsUnbreakable = true;
         SetColor(Color.gray);
+    }
+
+    public void AnimateDestroy(Action<Block> onEnd) {
+        StartCoroutine(AnimateDestroyCoroutine(onEnd));
+    }
+
+    IEnumerator AnimateDestroyCoroutine(Action<Block> onEnd) {
+        while (transform.localScale.x > Mathf.Epsilon) {
+            transform.localScale -= Vector3.one * .05f;
+            yield return null;
+        }
+        onEnd.Invoke(this);
     }
 
     public override string ToString() {

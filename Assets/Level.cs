@@ -134,14 +134,17 @@ public class Level : MonoBehaviour {
     void DestroyBlock(Cell cell) {
         var block = GetBlock(cell);
         if (!block) return;
+        if (block.IsUnbreakable) return;
 
         Blocks[cell.X, cell.Y] = null;
-        Destroy(block.gameObject);
-        OnBlockDestroyed?.Invoke();
+
+        block.AnimateDestroy(block => {
+            Destroy(block.gameObject);
+            OnBlockDestroyed?.Invoke();
+        });
     }
 
     public void DestroyBlock(Block block) {
-        if (block.IsUnbreakable) return;
 
         DestroyBlock(block.Cell);
     }
