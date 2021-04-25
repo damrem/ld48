@@ -353,6 +353,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 01e296e801643df48b1eaba9922677e2, type: 3}
   - {fileID: 8300000, guid: 4e1b73cea2dd7a24a8e1db0753ab1789, type: 3}
   - {fileID: 8300000, guid: d78651526e5c2dd42b97b64be18ba953, type: 3}
+  CoinSound: {fileID: 8300000, guid: 6294b6285deed0c4f8e6d790f539193a, type: 3}
+  GemSound: {fileID: 8300000, guid: 674aa7dbb401c1b41aaa81bd402b0e8e, type: 3}
   Colors:
   - {r: 0.5, g: 0, b: 0, a: 0}
   - {r: 0.5, g: 0.025490195, b: 0.5, a: 0}

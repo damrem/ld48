@@ -1,3 +1,4 @@
+using Damrem.Collections;
 using Damrem.Procedural;
 using UnityEngine;
 
@@ -27,6 +28,8 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
     public int EnergyDigCost = 3;
     [Range(0, 1)] public float CoinDensity = .25f;
     public AudioClip[] DigSounds;
+    public AudioClip CoinSound;
+    public AudioClip GemSound;
     public Color[] Colors;
     // public LevelDef[] LevelDefs;
 
@@ -34,6 +37,10 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
     int CurrentLevelIndex = 0;
     Level CurrentLevel;
     Player Player;
+
+    void PlaySound(AudioClip clip) {
+        GetComponent<AudioSource>().PlayOneShot(clip);
+    }
 
     void Start() {
         Init();
@@ -86,7 +93,7 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
         );
 
         level.OnGroupDestroyed += blockCount => {
-            GetComponent<AudioSource>().PlayOneShot(PRNG.InArray(DigSounds));
+            PRNG.Shuffle(DigSounds, blockCount).ToList().ForEach(PlaySound);
             int sum = blockCount;
             for (int i = 0; i < blockCount; i++) sum += i;
             Purse.Increment(sum);
@@ -151,10 +158,12 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
 
     void PickUpCoin() {
         Purse.Increment(CoinGain);
+        PlaySound(CoinSound);
     }
 
     void PickUpGem() {
         EnergyBar.Increment(EnergyRefill);
+        PlaySound(GemSound);
     }
 
     void SpendEnergy(EnergySpendingType spendingType) {
