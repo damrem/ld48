@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
     public int EnergyWalkCost = 1;
     public int EnergyDigCost = 3;
     [Range(0, 1)] public float CoinDensity = .25f;
-    [Range(0, 1)] public float GemDensity = .125f;
     public Color[] Colors;
     // public LevelDef[] LevelDefs;
 
@@ -79,10 +78,15 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
 
         var level = entity.AddComponent<Level>()
         // .Init(LevelDefs[index], BlockPrefab, ExitPrefab, CoinPrefab, GemPrefab, Seed, Colors);
-        .Init(LevelDef.CreateLevelDef(index, CoinDensity, GemDensity), BlockPrefab, ExitPrefab, CoinPrefab, GemPrefab, Seed, Colors);
+        .Init(
+            LevelDef.CreateLevelDef(index, CoinDensity, Colors),
+            BlockPrefab, ExitPrefab, CoinPrefab, GemPrefab, Seed, Colors
+        );
 
         level.OnGroupDestroyed += blockCount => {
-            Purse.Increment(blockCount * blockCount);
+            int sum = blockCount;
+            for (int i = 0; i < blockCount; i++) sum += i;
+            Purse.Increment(sum);
         };
 
         return level;

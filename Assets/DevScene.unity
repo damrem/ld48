@@ -341,16 +341,17 @@ MonoBehaviour:
   WelcomeScreen: {fileID: 1648869396}
   GameOverScreen: {fileID: 225707553}
   HUD: {fileID: 1506759163}
-  MaxEnergy: 16
-  EnergyRefill: 4
+  CoinGain: 10
+  MaxEnergy: 25
+  EnergyRefill: 3
   EnergyWalkCost: 0
   EnergyDigCost: 1
-  CoinDensity: 0.25
-  GemDensity: 0.05
+  CoinDensity: 0.1
   Colors:
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 0, g: 1, b: 0, a: 0}
-  - {r: 0, g: 0, b: 1, a: 0}
+  - {r: 0.5, g: 0, b: 0, a: 0}
+  - {r: 0.5, g: 0.025490195, b: 0.5, a: 0}
+  - {r: 0, g: 0, b: 0.5, a: 0}
+  - {r: 0.5, g: 0, b: 1, a: 0}
 --- !u!4 &50514582
 Transform:
   m_ObjectHideFlags: 0
@@ -2458,7 +2459,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 8, y: -8}
-  m_SizeDelta: {x: 128, y: 48}
+  m_SizeDelta: {x: 160, y: 48}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1284599908
 MonoBehaviour:
@@ -3606,7 +3607,7 @@ MonoBehaviour:
   m_CellSize: {x: 8, y: 8}
   m_Spacing: {x: 2, y: 2}
   m_Constraint: 2
-  m_ConstraintCount: 4
+  m_ConstraintCount: 5
 --- !u!222 &2055890392
 CanvasRenderer:
   m_ObjectHideFlags: 0

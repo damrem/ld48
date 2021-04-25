@@ -30,7 +30,7 @@ public class Level : MonoBehaviour {
         ExitPrefab = exitPrefab;
         CoinPrefab = coinPrefab;
         GemPrefab = gemPrefab;
-        Colors = colors;
+        Colors = PRNG.Shuffle(colors, Def.ColorCount);
 
         Blocks = new Block[def.Width, def.Depth + 2];
         Blocks.Fill((x, y) => CreateBlock(x, y));
@@ -46,12 +46,7 @@ public class Level : MonoBehaviour {
 
         BlockGroupSystem = GetComponent<BlockGroupSystem>().Init(this);
 
-        Gems = new Gem[def.Width, def.Depth + 2];
-        Gems.Fill(CreateGem);
-        Gems.ForEach(item => {
-            if (!item) return;
-            DestroyBlock(item.Cell, false);
-        });
+        AddGemRandomlyInRows();
 
         Coins = new Coin[def.Width, def.Depth + 2];
         Coins.Fill(CreateCoin);
@@ -61,6 +56,29 @@ public class Level : MonoBehaviour {
         });
 
         return this;
+    }
+
+    void AddGemRandomlyInCells() {
+        Gems = new Gem[Def.Width, Def.Depth + 2];
+        Gems.Fill(CreateGem);
+        Gems.ForEach(item => {
+            if (!item) return;
+            DestroyBlock(item.Cell, false);
+        });
+    }
+
+    void AddGemRandomlyInRows() {
+        Gems = new Gem[Def.Width, Def.Depth + 2];
+
+        for (int y = 0; y <= Gems.GetLength(1); y += Def.GemVerticalSpacing) {
+            var x = PRNG.Int(Def.Width);
+            Gems[x, y] = CreateGem(x, y);
+        }
+
+        Gems.ForEach(item => {
+            if (!item) return;
+            DestroyBlock(item.Cell, false);
+        });
     }
 
     public void AddBlockUnderPlayer(int playerInitialX) {
@@ -90,14 +108,13 @@ public class Level : MonoBehaviour {
 
     Gem CreateGem(int x, int y) {
         if (y == 0) return null;
-        if (!PRNG.Bool(Def.GemDensity)) return null;
+        // if (!PRNG.Bool(Def.GemDensity)) return null;
 
         var cell = new Cell(x, y);
         if (cell == Exit.Cell) return null;
         // if (GetBlock(cell)) return null;
         // if (!GetBlock(cell + Vector2Int.up)) return null;
-        if (Coins != null && GetCoin(cell)) return null;
-
+        // if (Coins != null && GetCoin(cell)) return null;
         return Instantiate(GemPrefab, transform).Init(cell);
     }
 
