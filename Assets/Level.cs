@@ -65,6 +65,8 @@ public class Level : MonoBehaviour {
 
         var cell = new Cell(x, y);
         if (cell == Exit.Cell) return null;
+        if (GetBlock(cell)) return null;
+        if (!GetBlock(cell + Vector2Int.up)) return null;
         if (Gems != null && GetGem(cell)) return null;
 
         return Instantiate(CoinPrefab, transform).Init(cell);
@@ -76,6 +78,8 @@ public class Level : MonoBehaviour {
 
         var cell = new Cell(x, y);
         if (cell == Exit.Cell) return null;
+        if (GetBlock(cell)) return null;
+        if (!GetBlock(cell + Vector2Int.up)) return null;
         if (Coins != null && GetCoin(cell)) return null;
 
         return Instantiate(GemPrefab, transform).Init(cell);

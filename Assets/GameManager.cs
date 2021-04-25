@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
 
     void InitHUD() {
         Purse.Init();
-        EnergyBar.Init(100);
+        EnergyBar.Init(25);
     }
 
     Level CreateLevel(int index) {

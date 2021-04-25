@@ -62,7 +62,7 @@ public class PlayerMovementSystem : MonoBehaviour {
         var targetBlock = Level.GetBlock(targetCell);
         OnEnergySpent.Invoke(EnergySpendingType.Dig);
         Level.DestroyGroup(targetBlock);
-        Invoke("StopDig", .5f);
+        Invoke("StopDig", .25f);
     }
 
     void StopDig() {
