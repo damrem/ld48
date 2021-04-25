@@ -280,7 +280,7 @@ MonoBehaviour:
   GameOverSound: {fileID: 8300000, guid: e49022323967b7e4f8154c27ed4b98d5, type: 3}
   LandSound: {fileID: 8300000, guid: 33ac62df91555fb4c983d32df9ef2ad2, type: 3}
   Colors:
-  - {r: 0.5, g: 0, b: 0, a: 0}
+  - {r: 0.5019608, g: 0.2509804, b: 0, a: 0}
   - {r: 0.5, g: 0.025490195, b: 0.5, a: 0}
   - {r: 0, g: 0, b: 0.5, a: 0}
   - {r: 0.5, g: 0, b: 1, a: 0}

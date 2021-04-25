@@ -13,8 +13,8 @@ public class ExitSystem : MonoBehaviour {
         return this;
     }
 
-    void CheckIfPlayerHasExitted(MoveType moveType) {
-        if (Player.Cell != Level.Exit.Cell) return;
+    void CheckIfPlayerHasExitted(MoveType moveType, Cell cell) {
+        if (cell != Level.Exit.Cell) return;
 
         OnPlayerReachedExit?.Invoke();
     }

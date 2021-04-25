@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(CellPosition))]
 public class Walker : MonoBehaviour {
-    public event Action<MoveType> OnMoved;
+    public event Action<MoveType, Cell> OnMoved;
     public Cell Cell { get { return GetComponent<CellPosition>().Cell; } }
     public float MoveDuration = .5f;
     public bool IsMoving { get; private set; } = false;
@@ -73,7 +73,7 @@ public class Walker : MonoBehaviour {
         }
         GetComponent<CellPosition>().SetCell(cell);
         IsMoving = false;
-        OnMoved?.Invoke(moveType);
+        OnMoved?.Invoke(moveType, cell);
         onEnd?.Invoke();
         if (moveType == MoveType.Fall) IdleHead();
     }

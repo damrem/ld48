@@ -31,7 +31,7 @@ public class PlayerGravitySystem : MonoBehaviour {
         Player.Walker.MoveToCell(targetCell, OnLand);
     }
 
-    void CheckFall(MoveType moveType) {
+    void CheckFall(MoveType moveType, Cell cell) {
         CheckFall();
     }
 }

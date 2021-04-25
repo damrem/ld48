@@ -1,3 +1,4 @@
+// using System.Collections;
 using Damrem.Collections;
 using Damrem.Procedural;
 using UnityEngine;
@@ -50,10 +51,12 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
     }
 
     void Init() {
+        PRNG = new PRNG();
         WelcomeScreen.Init(InitGame);
         GotoWelcomeScreen();
-
         LevelTitle.GetComponent<Overlay>().Init(NextLevel);
+
+        // InitGame();
     }
 
     void GotoWelcomeScreen() {
@@ -63,7 +66,6 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
     }
 
     void InitGame() {
-        PRNG = new PRNG();
         InitHUD();
         PreNextLevel();
     }
@@ -104,11 +106,44 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
         return level;
     }
 
+    // Coroutine HighlightCoroutine;
+
     Player CreatePlayer(Cell cell) {
         var player = Instantiate(PlayerPrefab, transform).Init(cell);
         player.name = "Player";
+        // player.Walker.OnMoved += (moveType, cell) => {
+        //     CurrentLevel.UnhighlightAll();
+        //     HandleHighlight(cell);
+        // };
+        // HandleHighlight(cell);
         return player;
     }
+
+    // void HandleHighlight(Cell cell) {
+    //     if (HighlightCoroutine != null)
+    //         StopCoroutine(HighlightCoroutine);
+
+    //     HighlightCoroutine = StartCoroutine(
+    //         AlternateHighlightGroup(
+    //             cell + Vector2Int.left,
+    //             cell + Vector2Int.right,
+    //             cell + Vector2Int.up
+    //         )
+    //     );
+    // }
+
+    // IEnumerator AlternateHighlightGroup(params Cell[] cells) {
+    //     if (cells.Length == 0) yield return null;
+    //     int currentIndex = 0;
+
+    //     while (true) {
+    //         CurrentLevel.HighlightGroup(cells[currentIndex], false);
+    //         currentIndex++;
+    //         if (currentIndex > cells.Length - 1) currentIndex = 0;
+    //         CurrentLevel.HighlightGroup(cells[currentIndex], true);
+    //         yield return new WaitForSeconds(.25f);
+    //     }
+    // }
 
     void PreNextLevel() {
         Clear();

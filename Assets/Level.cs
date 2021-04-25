@@ -195,6 +195,32 @@ public class Level : MonoBehaviour {
         DestroyBlock(block.Cell, animate);
     }
 
+    public void UnhighlightAll() {
+        Blocks.ForEach(block => {
+            block?.Highlight(false);
+        });
+    }
+
+    public void HighlightGroup(Cell cell, bool toggle) {
+        if (cell.X < 0) return;
+        if (cell.X >= Def.Width) return;
+        if (cell.Y < 0) return;
+        if (cell.Y > Def.Width + 1) return;
+        var block = GetBlock(cell);
+        HighlightGroup(block, toggle);
+    }
+
+    void HighlightGroup(Block block, bool toggle) {
+        if (!block) return;//why would it be null???
+        if (block.IsUnbreakable) return;
+
+        var group = BlockGroupSystem.GroupFrom(block).ToList();
+
+        group.ForEach(block => {
+            block.Highlight(toggle);
+        });
+    }
+
     public void DestroyGroup(Block block) {
         if (!block) return;//why would it be null???
         if (block.IsUnbreakable) return;
