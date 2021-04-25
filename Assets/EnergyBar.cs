@@ -1,5 +1,6 @@
 using System;
 using Damrem.Collections;
+using Damrem.UnityEngine;
 using UnityEngine;
 // using UnityEngine.UI;
 
@@ -11,11 +12,17 @@ public class EnergyBar : MonoBehaviour {
     int MaxValue;
 
     public EnergyBar Init(int maxValue, Action onEmpty) {
+        Clear();
+
         Value = MaxValue = maxValue;
         OnEmpty += onEmpty;
         Points = new EnergyPoint[maxValue];
         Points.Fill(CreatePoint);
         return this;
+    }
+
+    void Clear() {
+        gameObject.DestroyChildren();
     }
 
     EnergyPoint CreatePoint() {
