@@ -42,8 +42,6 @@ public class EnergyBar : MonoBehaviour {
 
     public void Decrement(int value = 1) {
         SetValue(Value - value);
-        Debug.Log(Value);
-        Debug.Log(Value <= 0);
         if (Value <= 0) OnEmpty?.Invoke();
     }
 

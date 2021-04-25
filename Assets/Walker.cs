@@ -30,10 +30,16 @@ public class Walker : MonoBehaviour {
 
         StartCoroutine(AnimateMove(cell, moveType, () => {
             onEnd?.Invoke();
-            StopCoroutine(WalkCoroutine);
-            IdleHead();
+            if (WalkCoroutine != null) StopCoroutine(WalkCoroutine);
         }));
-        WalkCoroutine = StartCoroutine(AnimateWalk());
+
+        if (moveType == MoveType.Walk)
+            WalkCoroutine = StartCoroutine(AnimateWalk());
+    }
+
+    void AnimateFall() {
+        Debug.Log("AnimateFall " + Time.time);
+        Head.localPosition = HeadIdlePosition + Vector3.up / 4;
     }
 
     IEnumerator AnimateWalk() {
@@ -49,10 +55,13 @@ public class Walker : MonoBehaviour {
     }
 
     void IdleHead() {
+        Debug.Log("IdleHead " + Time.time);
         Head.localPosition = HeadIdlePosition;
     }
 
     IEnumerator AnimateMove(Cell cell, MoveType moveType, Action onEnd = default) {
+        Debug.Log("AnimateMove " + moveType);
+        if (moveType == MoveType.Fall) AnimateFall();
         IsMoving = true;
         var from = transform.position;
         var to = cell.ToWorldPosition();
@@ -66,5 +75,6 @@ public class Walker : MonoBehaviour {
         IsMoving = false;
         OnMoved?.Invoke(moveType);
         onEnd?.Invoke();
+        if (moveType == MoveType.Fall) IdleHead();
     }
 }
