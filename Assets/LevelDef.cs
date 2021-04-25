@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-[Serializable]
+[System.Serializable]
 public struct LevelDef {
     public int Width;
     public int Depth;
@@ -14,7 +13,7 @@ public struct LevelDef {
         return new LevelDef {
             Width = w,
             Depth = w * w,
-            BlockDensity = 1f / 3f + (float)index / 300f,
+            BlockDensity = .5f + Random.Range(0, .5f),
             // CoinDensity = (float)(100f - index) / 100f * .25f,
             // GemDensity = (float)(100f - index) / 100f * .1f,
             CoinDensity = .25f,

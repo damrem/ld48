@@ -10,10 +10,9 @@ public class ItemFloat : MonoBehaviour {
 
     IEnumerator Animate() {
         var initialPosition = transform.position;
+        transform.position = initialPosition + Vector3.up * Mathf.Cos(Random.Range(0, 1000)) / 4;
         while (true) {
-            var y = Mathf.Cos(Time.time) / 4;
-            Debug.Log(y);
-            transform.position = initialPosition + Vector3.up * y;
+            transform.position = initialPosition + Vector3.up * Mathf.Cos(Time.time) / 4;
             yield return null;
         }
     }
