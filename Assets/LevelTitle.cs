@@ -8,7 +8,7 @@ public class LevelTitle : MonoBehaviour {
     }
 
     public void SetLevelNumber(int value) {
-        LevelNumber.text = value.ToString();
+        LevelNumber.text = (value + 1).ToString();
     }
 
     public bool IsVisible { get { return gameObject.activeInHierarchy; } }

@@ -68,7 +68,6 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
 
         Clear();
 
-        CurrentLevelIndex++;
         LevelTitle.SetLevelNumber(CurrentLevelIndex);
         LevelTitle.Show();
     }
@@ -94,6 +93,7 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
         GetComponent<ExitSystem>().Init(CurrentLevel, Player, PreNextLevel);
 
         SetupCamera(Player.transform, CurrentLevel.Def.Width);
+        CurrentLevelIndex++;
     }
 
     void PickItem(Pickable pickable) {
@@ -132,4 +132,8 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
         camera.Follow = camera.LookAt = target;
         camera.m_Lens.OrthographicSize = size;
     }
+
+    // void Update() {
+    //     if (LevelTitle.IsVisible && Input.anyKey) NextLevel();
+    // }
 }

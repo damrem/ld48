@@ -29,7 +29,7 @@ public class Level : MonoBehaviour {
         GemPrefab = gemPrefab;
         Colors = colors;
         Blocks = new Block[def.Width, def.Depth + 2];
-        Blocks.Fill((x, y) => CreateBlock(x, y, true));
+        Blocks.Fill((x, y) => CreateBlock(x, y));
 
         Blocks.GetRow(0).ToList().FindAll(block => block != null).ForEach(DestroyBlock);
         CreateBottom();
@@ -127,6 +127,8 @@ public class Level : MonoBehaviour {
 
     void DestroyBlock(Cell cell) {
         var block = GetBlock(cell);
+        if (!block) return;
+
         Blocks[cell.X, cell.Y] = null;
         Destroy(block.gameObject);
         OnBlockDestroyed?.Invoke();
