@@ -56,8 +56,12 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
 
     void Clear() {
         GetComponent<PlayerMovementSystem>().enabled = false;
+
         CurrentLevel?.Clear();
+        CurrentLevel = null;
+
         Player?.Clear();
+        Player = null;
     }
 
     void InitHUD() {
@@ -84,8 +88,8 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
     }
 
     void PreNextLevel() {
+        Clear();
 
-        // Clear();
         HUD.gameObject.SetActive(true);
         LevelTitle.SetLevelIndex(CurrentLevelIndex);
         LevelTitle.GetComponent<Overlay>().Show();
