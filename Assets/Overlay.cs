@@ -17,10 +17,8 @@ public class Overlay : MonoBehaviour, IPointerClickHandler {
     }
 
     void Update() {
-        if (Keyboard.current.anyKey.wasReleasedThisFrame) {
-            Debug.Log("Update");
+        if (Keyboard.current.anyKey.wasReleasedThisFrame)
             OnClicked?.Invoke();
-        }
     }
 
     public bool IsVisible { get { return gameObject.activeInHierarchy; } }

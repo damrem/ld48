@@ -67,7 +67,8 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
         entity.transform.SetParent(transform);
 
         var level = entity.AddComponent<Level>()
-        .Init(LevelDefs[index], BlockPrefab, ExitPrefab, CoinPrefab, GemPrefab, Seed, Colors);
+        // .Init(LevelDefs[index], BlockPrefab, ExitPrefab, CoinPrefab, GemPrefab, Seed, Colors);
+        .Init(LevelDef.CreateLevelDef(index), BlockPrefab, ExitPrefab, CoinPrefab, GemPrefab, Seed, Colors);
 
         return level;
     }

@@ -51,7 +51,7 @@ public class Level : MonoBehaviour {
     public void AddBlockUnderPlayer(int playerInitialX) {
         if (GetBlock(new Cell(playerInitialX, 1))) return;
 
-        Blocks[playerInitialX, 1] = CreateBlock(playerInitialX, 1);
+        Blocks[playerInitialX, 1] = CreateBlock(playerInitialX, 1, true);
     }
 
     public void Clear() {
