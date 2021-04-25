@@ -12,6 +12,7 @@ public class Block : MonoBehaviour {
         Type = type;
         GetComponent<CellPosition>().Init(cell);
         SetColor(color);
+        transform.localRotation = Quaternion.Euler(UnityEngine.Random.Range(-5f, 5f), UnityEngine.Random.Range(-5f, 5f), UnityEngine.Random.Range(-5f, 5f));
         return this;
     }
 
