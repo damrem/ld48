@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
     public Purse Purse;
     public EnergyBar EnergyBar;
     public LevelTitle LevelTitle;
-    public WelcomeScreen WelcomeScreen;
+    public Overlay WelcomeScreen;
     public Canvas HUD;
     public int EnergyRefill = 10;
     public int EnergyWalkCost = 1;
@@ -34,12 +34,10 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
     }
 
     void Init() {
-        WelcomeScreen.OnClicked += () => {
-            WelcomeScreen.gameObject.SetActive(false);
-            InitGame();
-        };
-
+        WelcomeScreen.Init(InitGame);
         GotoWelcomeScreen();
+
+        LevelTitle.Init(NextLevel);
     }
 
     void GotoWelcomeScreen() {
@@ -85,13 +83,13 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
         Clear();
 
         LevelTitle.SetLevelNumber(CurrentLevelIndex);
-        LevelTitle.Show();
+        LevelTitle.Overlay.Show();
     }
 
     public void OnPointerClick(PointerEventData data) {
         if (!LevelTitle.enabled) return;
 
-        LevelTitle.Hide();
+        LevelTitle.Overlay.Hide();
         NextLevel();
     }
 
@@ -117,7 +115,6 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
     }
 
     void PickItem(Pickable pickable) {
-        Debug.Log("PickItem " + pickable);
         switch (pickable.Type) {
             case PickableType.Coin: PickUpCoin(); break;
             case PickableType.Gem: PickUpGem(); break;

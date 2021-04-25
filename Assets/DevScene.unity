@@ -2539,6 +2539,7 @@ GameObject:
   - component: {fileID: 1402946389}
   - component: {fileID: 1402946390}
   - component: {fileID: 1402946388}
+  - component: {fileID: 1402946391}
   m_Layer: 0
   m_Name: LevelTitle
   m_TagString: Untagged
@@ -2617,6 +2618,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelNumber: {fileID: 48041912}
+--- !u!114 &1402946391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402946386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b46142a30c93ae4d9e437330948ba78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1452980814
 GameObject:
   m_ObjectHideFlags: 0
@@ -2841,6 +2854,7 @@ GameObject:
   - component: {fileID: 1506759162}
   - component: {fileID: 1506759161}
   - component: {fileID: 1506759164}
+  - component: {fileID: 1506759165}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -2965,6 +2979,18 @@ MonoBehaviour:
   m_DefaultActionMap: AnyKey
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1506759165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506759159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b46142a30c93ae4d9e437330948ba78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1648869391
 GameObject:
   m_ObjectHideFlags: 0
@@ -3078,7 +3104,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b46142a30c93ae4d9e437330948ba78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InputActionAsset: {fileID: 0}
 --- !u!1 &1661661079
 GameObject:
   m_ObjectHideFlags: 0
