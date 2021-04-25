@@ -332,7 +332,7 @@ MonoBehaviour:
   Seed: 0
   PlayerPrefab: {fileID: 4325701394354553241, guid: 999eda3c4e56c4443969e72645a4ffa8, type: 3}
   BlockPrefab: {fileID: 961800989488291005, guid: de794982f163ecd4ab190f12b6f6754c, type: 3}
-  ExitPrefab: {fileID: 7254686373218765644, guid: 654b7086cffb5524dbe9a44f7cb486ba, type: 3}
+  ExitPrefab: {fileID: 711145664231996402, guid: d67123605692e2c42985ed45adfe3e68, type: 3}
   CoinPrefab: {fileID: -9121832172927395264, guid: 587ce3274a772ea45974cdedc5afb4a4, type: 3}
   GemPrefab: {fileID: -6265699836500785094, guid: 9509ec5f9dbf2994dbfe1cac34383f1b, type: 3}
   Purse: {fileID: 1284599910}
@@ -791,6 +791,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48367fe31e0fd82489a54909464d7b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OffsetY: 2.5
+  SizeOffset: -0.667
 --- !u!114 &225707553 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4475521249113641247, guid: 223cf7c92f1ea05408a2239b53c2a07b, type: 3}
@@ -1036,7 +1038,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
