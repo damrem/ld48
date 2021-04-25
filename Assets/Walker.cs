@@ -8,9 +8,14 @@ public class Walker : MonoBehaviour {
     public Cell Cell { get { return GetComponent<CellPosition>().Cell; } }
     public float MoveDuration = .5f;
     public bool IsMoving { get; private set; } = false;
+    public Transform Head;
+    public Transform Body;
+    Coroutine WalkCoroutine;
+    Vector3 HeadIdlePosition;
 
     public Walker Init(Cell cell) {
         GetComponent<CellPosition>().Init(cell);
+        HeadIdlePosition = Head.localPosition;
         return this;
     }
 
@@ -23,7 +28,28 @@ public class Walker : MonoBehaviour {
 
         var moveType = cell.X != Cell.X ? MoveType.Walk : MoveType.Fall;
 
-        StartCoroutine(AnimateMove(cell, moveType, onEnd));
+        StartCoroutine(AnimateMove(cell, moveType, () => {
+            onEnd?.Invoke();
+            StopCoroutine(WalkCoroutine);
+            IdleHead();
+        }));
+        WalkCoroutine = StartCoroutine(AnimateWalk());
+    }
+
+    IEnumerator AnimateWalk() {
+        float elapsed = 0;
+
+        while (IsMoving) {
+            elapsed += Time.deltaTime;
+            Head.localPosition = HeadIdlePosition + Vector3.down * Mathf.Cos(elapsed * 20) / 8;
+            // transform.localScale = new Vector3(1, .75f + .25f * Mathf.Cos(elapsed * 20), 1);
+            yield return null;
+        }
+        IdleHead();
+    }
+
+    void IdleHead() {
+        Head.localPosition = HeadIdlePosition;
     }
 
     IEnumerator AnimateMove(Cell cell, MoveType moveType, Action onEnd = default) {
