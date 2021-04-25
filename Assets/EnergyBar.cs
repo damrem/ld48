@@ -35,13 +35,15 @@ public class EnergyBar : MonoBehaviour {
 
     public void Decrement(int value = 1) {
         SetValue(Value - value);
-        if (Value == 0) OnEmpty?.Invoke();
+        Debug.Log(Value);
+        Debug.Log(Value <= 0);
+        if (Value <= 0) OnEmpty?.Invoke();
     }
 
     void SetValue(int value) {
-        if (value < 0) return;
+        if (value < 0) value = 0;
+        else if (value > MaxValue) value = MaxValue;
 
-        if (value > MaxValue) value = MaxValue;
         Value = value;
         UpdatePoints();
     }

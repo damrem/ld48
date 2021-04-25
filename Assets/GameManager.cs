@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
     public Overlay WelcomeScreen;
     public GameOverScreen GameOverScreen;
     public Canvas HUD;
+    public int MaxEnergy = 5;
     public int EnergyRefill = 10;
     public int EnergyWalkCost = 1;
     public int EnergyDigCost = 3;
@@ -38,12 +39,13 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
         WelcomeScreen.Init(InitGame);
         GotoWelcomeScreen();
 
-        LevelTitle.Init(NextLevel);
+        LevelTitle.GetComponent<Overlay>().Init(NextLevel);
     }
 
     void GotoWelcomeScreen() {
+        Debug.Log("GotoWelcomeScreen");
         HUD.enabled = false;
-        WelcomeScreen.enabled = true;
+        WelcomeScreen.Show();
     }
 
     void InitGame() {
@@ -53,6 +55,7 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
     }
 
     void Clear() {
+        GetComponent<PlayerMovementSystem>().enabled = false;
         CurrentLevel?.Clear();
         Player?.Clear();
     }
@@ -60,7 +63,7 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
     void InitHUD() {
         HUD.enabled = true;
         Purse.Init();
-        EnergyBar.Init(25, GotoGameOverScreen);
+        EnergyBar.Init(MaxEnergy, GotoGameOverScreen);
     }
 
     Level CreateLevel(int index) {
@@ -82,21 +85,21 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
 
     void PreNextLevel() {
 
-        Clear();
+        // Clear();
 
         LevelTitle.SetLevelIndex(CurrentLevelIndex);
-        LevelTitle.Overlay.Show();
+        LevelTitle.GetComponent<Overlay>().Show();
     }
 
     public void OnPointerClick(PointerEventData data) {
         if (!LevelTitle.enabled) return;
 
-        LevelTitle.Overlay.Hide();
+        LevelTitle.GetComponent<Overlay>().Hide();
         NextLevel();
     }
 
     void NextLevel() {
-
+        GetComponent<PlayerMovementSystem>().enabled = true;
 
         CurrentLevel = CreateLevel(CurrentLevelIndex);
 
@@ -143,7 +146,10 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
     }
 
     void GotoGameOverScreen() {
-
+        Debug.Log("GotoGameOverScreen");
+        Clear();
+        GameOverScreen.Init(CurrentLevelIndex, Purse.Value, GotoWelcomeScreen);
+        GameOverScreen.Overlay.Show();
     }
 
     void SetupCamera(Transform target, Level level) {

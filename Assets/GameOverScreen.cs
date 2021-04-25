@@ -7,6 +7,7 @@ public class GameOverScreen : MonoBehaviour {
     public Purse Purse;
     public Overlay Overlay { get { return GetComponent<Overlay>(); } }
     public GameOverScreen Init(int levelIndex, int purseValue, Action onInteracted) {
+        Debug.Log("GameOverScreen.Init");
         GetComponent<Overlay>().Init(onInteracted);
         LevelTitle.SetLevelIndex(levelIndex);
         Purse.Init(purseValue);

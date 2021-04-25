@@ -1,25 +1,26 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
+// using UnityEngine.InputSystem;
 
 public class Overlay : MonoBehaviour, IPointerClickHandler {
     event Action OnClicked;
 
     public Overlay Init(Action onInteracted) {
-        OnClicked += onInteracted;
+        OnClicked = onInteracted;
         OnClicked += Hide;
         return this;
     }
 
     public void OnPointerClick(PointerEventData data) {
+        Debug.Log(name);
         OnClicked.Invoke();
     }
 
-    void Update() {
-        if (Keyboard.current.anyKey.wasReleasedThisFrame)
-            OnClicked?.Invoke();
-    }
+    // void Update() {
+    //     if (Keyboard.current.anyKey.wasReleasedThisFrame)
+    //         OnClicked?.Invoke();
+    // }
 
     public bool IsVisible { get { return gameObject.activeInHierarchy; } }
 
