@@ -7,7 +7,7 @@ public class CameraMan : MonoBehaviour {
     Level Level;
     public CameraMan Init(Transform target, Level level) {
         Debug.Log("Init " + target);
-        GetComponent<Camera>().orthographicSize = level.Def.Width;
+        GetComponent<Camera>().orthographicSize = level.Def.Width + .5f;
         Target = target;
         Level = level; ;
         return this;
@@ -18,7 +18,7 @@ public class CameraMan : MonoBehaviour {
 
         var targetY = Target.position.y + 4;
         if (targetY < -Level.Def.Depth + 8) targetY = -Level.Def.Depth + 8;
-        var pos = new Vector3((float)Level.Def.Width / 2 - .5f, targetY, -10);
+        var pos = new Vector3((float)Level.Def.Width / 2 - .25f, targetY, -10);
         transform.position = pos;
     }
 }
