@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
     public EnergyBar EnergyBar;
     public LevelTitle LevelTitle;
     public Overlay WelcomeScreen;
+    public GameOverScreen GameOverScreen;
     public Canvas HUD;
     public int EnergyRefill = 10;
     public int EnergyWalkCost = 1;
