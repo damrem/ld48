@@ -81,8 +81,12 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
 
     void NextLevel() {
 
+
         CurrentLevel = CreateLevel(CurrentLevelIndex);
-        Player = CreatePlayer(new Cell(PRNG.Int(CurrentLevel.Def.Width), 0));
+
+        var playerInitialX = PRNG.Int(CurrentLevel.Def.Width);
+        Player = CreatePlayer(new Cell(playerInitialX, 0));
+        CurrentLevel.AddBlockUnderPlayer(playerInitialX);
 
         var picker = Player.GetComponent<Picker>();
         picker.OnTouchedPickable += PickItem;

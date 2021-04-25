@@ -32,6 +32,7 @@ public class Level : MonoBehaviour {
         Blocks.Fill((x, y) => CreateBlock(x, y));
 
         Blocks.GetRow(0).ToList().FindAll(block => block != null).ForEach(DestroyBlock);
+
         CreateBottom();
         Exit = CreateExit();
 
@@ -44,8 +45,13 @@ public class Level : MonoBehaviour {
         Coins.Fill(CreateCoin);
 
 
-
         return this;
+    }
+
+    public void AddBlockUnderPlayer(int playerInitialX) {
+        if (GetBlock(new Cell(playerInitialX, 1))) return;
+
+        Blocks[playerInitialX, 1] = CreateBlock(playerInitialX, 1);
     }
 
     public void Clear() {
