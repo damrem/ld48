@@ -15,8 +15,10 @@ public struct LevelDef {
             Width = w,
             Depth = w * w,
             BlockDensity = 1f / 3f + (float)index / 300f,
-            CoinDensity = (float)(100f - index) / 100f * .25f,
-            GemDensity = (float)(100f - index) / 100f * .1f,
+            // CoinDensity = (float)(100f - index) / 100f * .25f,
+            // GemDensity = (float)(100f - index) / 100f * .1f,
+            CoinDensity = .25f,
+            GemDensity = .25f,
         };
     }
 }

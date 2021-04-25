@@ -9,9 +9,9 @@ public class PlayerControl : MonoBehaviour {
 
     public PlayerControl Init() {
         var playerInput = GetComponent<PlayerInput>();
+        playerInput.onActionTriggered += OnActionTriggered;
         playerInput.enabled = false;
         StartCoroutine(Enable(playerInput));
-        playerInput.onActionTriggered += OnActionTriggered;
         return this;
     }
 

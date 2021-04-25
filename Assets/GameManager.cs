@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
     }
 
     void InitGame() {
-        PRNG = new PRNG(Seed);
+        PRNG = new PRNG();
         InitHUD();
         PreNextLevel();
     }

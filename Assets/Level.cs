@@ -22,7 +22,7 @@ public class Level : MonoBehaviour {
     BlockGroupSystem BlockGroupSystem;
     public Level Init(LevelDef def, Block blockPrefab, Exit exitPrefab, Coin coinPrefab, Gem gemPrefab, int seed, Color[] colors) {
         Def = def;
-        PRNG = new PRNG(seed);
+        PRNG = new PRNG();
         BlockPrefab = blockPrefab;
         ExitPrefab = exitPrefab;
         CoinPrefab = coinPrefab;
