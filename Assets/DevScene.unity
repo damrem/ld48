@@ -355,6 +355,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d78651526e5c2dd42b97b64be18ba953, type: 3}
   CoinSound: {fileID: 8300000, guid: 6294b6285deed0c4f8e6d790f539193a, type: 3}
   GemSound: {fileID: 8300000, guid: 674aa7dbb401c1b41aaa81bd402b0e8e, type: 3}
+  ExitSound: {fileID: 8300000, guid: 149d870431c0ae24283095769cfc68ae, type: 3}
   Colors:
   - {r: 0.5, g: 0, b: 0, a: 0}
   - {r: 0.5, g: 0.025490195, b: 0.5, a: 0}

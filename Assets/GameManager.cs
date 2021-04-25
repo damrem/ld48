@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
     public AudioClip[] DigSounds;
     public AudioClip CoinSound;
     public AudioClip GemSound;
+    public AudioClip ExitSound;
+    public AudioClip GameOverSound;
     public Color[] Colors;
     // public LevelDef[] LevelDefs;
 
@@ -86,7 +88,6 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
         entity.transform.SetParent(transform);
 
         var level = entity.AddComponent<Level>()
-        // .Init(LevelDefs[index], BlockPrefab, ExitPrefab, CoinPrefab, GemPrefab, Seed, Colors);
         .Init(
             LevelDef.CreateLevelDef(index, CoinDensity, Colors),
             BlockPrefab, ExitPrefab, CoinPrefab, GemPrefab, Seed, Colors
@@ -139,7 +140,7 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
         GetComponent<PlayerGravitySystem>().Init(CurrentLevel, Player);
         GetComponent<PickerSystem>().Init(CurrentLevel, picker);
         GetComponent<ExitSystem>().Init(CurrentLevel, Player, () => {
-
+            PlaySound(ExitSound);
             EnergyBar.Increment(EnergyRefillBetweenLevels);
             PreNextLevel();
         });
@@ -177,8 +178,8 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
     }
 
     void GotoGameOverScreen() {
-        Debug.Log("GotoGameOverScreen");
         Clear();
+        PlaySound(GameOverSound);
         HUD.gameObject.SetActive(false);
         GameOverScreen.Init(CurrentLevelIndex, Purse.Value, GotoWelcomeScreen);
         GameOverScreen.Overlay.Show();

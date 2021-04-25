@@ -196,6 +196,7 @@ public class Level : MonoBehaviour {
     }
 
     public void DestroyGroup(Block block) {
+        if (!block) return;//why would it be null???
         if (block.IsUnbreakable) return;
 
         var group = BlockGroupSystem.GroupFrom(block).ToList();
