@@ -8,6 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(BlockGroupSystem))]
 public class Level : MonoBehaviour {
     public event Action OnBlockDestroyed;
+    public event Action<int> OnGroupDestroyed;
     public LevelDef Def { get; private set; }
     public Exit Exit { get; private set; }
     public Coin[,] Coins { get; private set; }
@@ -22,16 +23,23 @@ public class Level : MonoBehaviour {
     BlockGroupSystem BlockGroupSystem;
     public Level Init(LevelDef def, Block blockPrefab, Exit exitPrefab, Coin coinPrefab, Gem gemPrefab, int seed, Color[] colors) {
         Def = def;
+
         PRNG = new PRNG();
+
         BlockPrefab = blockPrefab;
         ExitPrefab = exitPrefab;
         CoinPrefab = coinPrefab;
         GemPrefab = gemPrefab;
         Colors = colors;
+
         Blocks = new Block[def.Width, def.Depth + 2];
         Blocks.Fill((x, y) => CreateBlock(x, y));
 
-        Blocks.GetRow(0).ToList().FindAll(block => block != null).ForEach(DestroyBlock);
+        Blocks.GetRow(0).ToList()
+        .FindAll(block => block != null)
+        .ForEach(block => {
+            DestroyBlock(block, false);
+        });
 
         CreateBottom();
         Exit = CreateExit();
@@ -40,10 +48,17 @@ public class Level : MonoBehaviour {
 
         Gems = new Gem[def.Width, def.Depth + 2];
         Gems.Fill(CreateGem);
+        Gems.ForEach(item => {
+            if (!item) return;
+            DestroyBlock(item.Cell, false);
+        });
 
         Coins = new Coin[def.Width, def.Depth + 2];
         Coins.Fill(CreateCoin);
-
+        Coins.ForEach(item => {
+            if (!item) return;
+            DestroyBlock(item.Cell, false);
+        });
 
         return this;
     }
@@ -56,6 +71,7 @@ public class Level : MonoBehaviour {
 
     public void Clear() {
         OnBlockDestroyed = default;
+        OnGroupDestroyed = default;
         Destroy(gameObject);
     }
 
@@ -65,8 +81,8 @@ public class Level : MonoBehaviour {
 
         var cell = new Cell(x, y);
         if (cell == Exit.Cell) return null;
-        if (GetBlock(cell)) return null;
-        if (!GetBlock(cell + Vector2Int.up)) return null;
+        // if (GetBlock(cell)) return null;
+        // if (!GetBlock(cell + Vector2Int.up)) return null;
         if (Gems != null && GetGem(cell)) return null;
 
         return Instantiate(CoinPrefab, transform).Init(cell);
@@ -78,15 +94,20 @@ public class Level : MonoBehaviour {
 
         var cell = new Cell(x, y);
         if (cell == Exit.Cell) return null;
-        if (GetBlock(cell)) return null;
-        if (!GetBlock(cell + Vector2Int.up)) return null;
+        // if (GetBlock(cell)) return null;
+        // if (!GetBlock(cell + Vector2Int.up)) return null;
         if (Coins != null && GetCoin(cell)) return null;
 
         return Instantiate(GemPrefab, transform).Init(cell);
     }
 
     IEnumerable<Block> CreateBottom() {
-        Blocks.GetRow(Def.Depth + 1).ToList().FindAll(block => block != null).ForEach(DestroyBlock);
+        Blocks.GetRow(Def.Depth + 1).ToList()
+        .FindAll(block => block != null)
+        .ForEach(block => {
+            DestroyBlock(block, false);
+        });
+
         for (int x = 0; x < Def.Width; x++) {
             var block = CreateBlock(x, Def.Depth + 1, true);
             block.SetUnbreakable();
@@ -122,7 +143,7 @@ public class Level : MonoBehaviour {
     }
 
     Block CreateBlock(int x, int y, bool force = false) {
-        if (!force && !PRNG.Bool(Def.BlockDensity)) return null;
+        // if (!force && !PRNG.Bool(Def.BlockDensity)) return null;
 
         var type = PRNG.Int(Colors.Length);
         var block = Instantiate(BlockPrefab).Init(new Cell(x, y), type, Colors[type]);
@@ -135,22 +156,23 @@ public class Level : MonoBehaviour {
         return Blocks[cell.X, cell.Y];
     }
 
-    void DestroyBlock(Cell cell) {
+    void DestroyBlock(Cell cell, bool animate = true) {
         var block = GetBlock(cell);
         if (!block) return;
         if (block.IsUnbreakable) return;
 
         Blocks[cell.X, cell.Y] = null;
 
-        block.AnimateDestroy(block => {
+        void onEnd(Block block) {
             Destroy(block.gameObject);
             OnBlockDestroyed?.Invoke();
-        });
+        };
+        if (animate) block.AnimateDestroy(onEnd);
+        else onEnd(block);
     }
 
-    public void DestroyBlock(Block block) {
-
-        DestroyBlock(block.Cell);
+    public void DestroyBlock(Block block, bool animate = true) {
+        DestroyBlock(block.Cell, animate);
     }
 
     public void DestroyGroup(Block block) {
@@ -158,7 +180,11 @@ public class Level : MonoBehaviour {
 
         var group = BlockGroupSystem.GroupFrom(block).ToList();
 
-        group.ForEach(DestroyBlock);
+        group.ForEach(block => {
+            DestroyBlock(block, true);
+        });
+
+        OnGroupDestroyed?.Invoke(group.Count);
     }
 
     public Block[] GetColumn(int x) {

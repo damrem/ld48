@@ -8,7 +8,7 @@ public struct LevelDef {
     [Range(0, 1)] public float CoinDensity;
     [Range(0, 1)] public float GemDensity;
 
-    public static LevelDef CreateLevelDef(int index) {
+    public static LevelDef CreateLevelDef(int index, float coinDensity, float gemDensity) {
         var w = index + 3;
         return new LevelDef {
             Width = w,
@@ -16,8 +16,8 @@ public struct LevelDef {
             BlockDensity = .5f + Random.Range(0, .5f),
             // CoinDensity = (float)(100f - index) / 100f * .25f,
             // GemDensity = (float)(100f - index) / 100f * .1f,
-            CoinDensity = .25f,
-            GemDensity = .25f,
+            CoinDensity = coinDensity,
+            GemDensity = gemDensity,
         };
     }
 }

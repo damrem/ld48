@@ -19,12 +19,15 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
     public Overlay WelcomeScreen;
     public GameOverScreen GameOverScreen;
     public Canvas HUD;
+    public int CoinGain = 10;
     public int MaxEnergy = 5;
     public int EnergyRefill = 10;
     public int EnergyWalkCost = 1;
     public int EnergyDigCost = 3;
+    [Range(0, 1)] public float CoinDensity = .25f;
+    [Range(0, 1)] public float GemDensity = .125f;
     public Color[] Colors;
-    public LevelDef[] LevelDefs;
+    // public LevelDef[] LevelDefs;
 
     PRNG PRNG;
     int CurrentLevelIndex = 0;
@@ -76,7 +79,11 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
 
         var level = entity.AddComponent<Level>()
         // .Init(LevelDefs[index], BlockPrefab, ExitPrefab, CoinPrefab, GemPrefab, Seed, Colors);
-        .Init(LevelDef.CreateLevelDef(index), BlockPrefab, ExitPrefab, CoinPrefab, GemPrefab, Seed, Colors);
+        .Init(LevelDef.CreateLevelDef(index, CoinDensity, GemDensity), BlockPrefab, ExitPrefab, CoinPrefab, GemPrefab, Seed, Colors);
+
+        level.OnGroupDestroyed += blockCount => {
+            Purse.Increment(blockCount * blockCount);
+        };
 
         return level;
     }
@@ -132,7 +139,7 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
     }
 
     void PickUpCoin() {
-        Purse.Increment();
+        Purse.Increment(CoinGain);
     }
 
     void PickUpGem() {
