@@ -1,0 +1,33 @@
+{
+    "name": "UI",
+    "maps": [
+        {
+            "name": "AnyKey",
+            "id": "4f81b417-c248-45ab-99ea-9e3a57e6c693",
+            "actions": [
+                {
+                    "name": "AnyKey",
+                    "type": "Button",
+                    "id": "9e8c0b2c-0e5a-45a0-bf26-abe649a52647",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3b8c1c1d-2fbb-4cd5-b59d-0b80b853dc86",
+                    "path": "<Keyboard>/anyKey",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AnyKey",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
