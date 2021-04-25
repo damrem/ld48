@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
     void InitHUD() {
         HUD.enabled = true;
         Purse.Init();
-        EnergyBar.Init(25);
+        EnergyBar.Init(25, GotoGameOverScreen);
     }
 
     Level CreateLevel(int index) {
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
 
         Clear();
 
-        LevelTitle.SetLevelNumber(CurrentLevelIndex);
+        LevelTitle.SetLevelIndex(CurrentLevelIndex);
         LevelTitle.Overlay.Show();
     }
 
@@ -141,7 +141,7 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
         EnergyBar.Decrement(value);
     }
 
-    void GameOver() {
+    void GotoGameOverScreen() {
 
     }
 

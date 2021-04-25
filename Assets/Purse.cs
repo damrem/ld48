@@ -2,14 +2,12 @@ using TMPro;
 using UnityEngine;
 
 public class Purse : MonoBehaviour {
-    int Value = 0;
+    public int Value { get; private set; } = 0;
     TextMeshProUGUI TextMesh;
 
-    void Awake() {
+    public Purse Init(int initialValue = 0) {
         TextMesh = GetComponentInChildren<TextMeshProUGUI>();
-    }
-
-    public Purse Init() {
+        SetValue(initialValue);
         return this;
     }
 

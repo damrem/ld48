@@ -11,7 +11,7 @@ public class LevelTitle : MonoBehaviour {
         Overlay.Init(onInteracted);
         return this;
     }
-    public void SetLevelNumber(int value) {
+    public void SetLevelIndex(int value) {
         LevelNumber.text = (value + 1).ToString();
     }
 }

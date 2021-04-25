@@ -4,16 +4,15 @@ using UnityEngine;
 // using UnityEngine.UI;
 
 public class EnergyBar : MonoBehaviour {
-    public event Action OnEmpty;
-    // public RectTransform Background;
-    // public RectTransform Gauge;
+    event Action OnEmpty;
     public EnergyPoint EnergyPointPrefab;
     EnergyPoint[] Points;
     int Value;
     int MaxValue;
 
-    public EnergyBar Init(int maxValue) {
+    public EnergyBar Init(int maxValue, Action onEmpty) {
         Value = MaxValue = maxValue;
+        OnEmpty += onEmpty;
         Points = new EnergyPoint[maxValue];
         Points.Fill(CreatePoint);
         return this;
@@ -43,13 +42,7 @@ public class EnergyBar : MonoBehaviour {
         if (value < 0) return;
 
         if (value > MaxValue) value = MaxValue;
-
         Value = value;
-
-        // var top = -(float)(MaxValue - Value) / MaxValue * (Background.rect.height - 4);
-        // if (top > -2) top = -2;
-        // Gauge.offsetMax = new Vector2(-2, top);
-
         UpdatePoints();
     }
 }
