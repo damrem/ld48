@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(PickerSystem))]
 [RequireComponent(typeof(PlayerMovementSystem))]
 [RequireComponent(typeof(PlayerGravitySystem))]
-public class GameManager : MonoBehaviour, IPointerClickHandler {
+public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
     public int Seed = 0;
     public Player PlayerPrefab;
     public Block BlockPrefab;
@@ -44,8 +44,8 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
 
     void GotoWelcomeScreen() {
         Debug.Log("GotoWelcomeScreen");
-        HUD.enabled = false;
         WelcomeScreen.Show();
+        CurrentLevelIndex = 0;
     }
 
     void InitGame() {
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
     }
 
     void InitHUD() {
-        HUD.enabled = true;
+        HUD.gameObject.SetActive(true);
         Purse.Init();
         EnergyBar.Init(MaxEnergy, GotoGameOverScreen);
     }
@@ -86,17 +86,17 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
     void PreNextLevel() {
 
         // Clear();
-
+        HUD.gameObject.SetActive(true);
         LevelTitle.SetLevelIndex(CurrentLevelIndex);
         LevelTitle.GetComponent<Overlay>().Show();
     }
 
-    public void OnPointerClick(PointerEventData data) {
-        if (!LevelTitle.enabled) return;
+    // public void OnPointerClick(PointerEventData data) {
+    //     if (!LevelTitle.enabled) return;
 
-        LevelTitle.GetComponent<Overlay>().Hide();
-        NextLevel();
-    }
+    //     LevelTitle.GetComponent<Overlay>().Hide();
+    //     NextLevel();
+    // }
 
     void NextLevel() {
         GetComponent<PlayerMovementSystem>().enabled = true;
@@ -148,6 +148,7 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
     void GotoGameOverScreen() {
         Debug.Log("GotoGameOverScreen");
         Clear();
+        HUD.gameObject.SetActive(false);
         GameOverScreen.Init(CurrentLevelIndex, Purse.Value, GotoWelcomeScreen);
         GameOverScreen.Overlay.Show();
     }
