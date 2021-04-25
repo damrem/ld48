@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Damrem.Collections;
 using UnityEngine;
@@ -5,9 +6,11 @@ using UnityEngine;
 public class PlayerGravitySystem : MonoBehaviour {
     Level Level;
     Player Player;
-    public PlayerGravitySystem Init(Level level, Player player) {
+    Action OnLand;
+    public PlayerGravitySystem Init(Level level, Player player, Action onLand) {
         Level = level;
         Player = player;
+        OnLand = onLand;
         player.Walker.OnMoved += CheckFall;
         level.OnBlockDestroyed += CheckFall;
         return this;
@@ -25,7 +28,7 @@ public class PlayerGravitySystem : MonoBehaviour {
         }
         if (targetCell == Player.Cell) return;
 
-        Player.Walker.MoveToCell(targetCell);
+        Player.Walker.MoveToCell(targetCell, OnLand);
     }
 
     void CheckFall(MoveType moveType) {

@@ -356,6 +356,8 @@ MonoBehaviour:
   CoinSound: {fileID: 8300000, guid: 6294b6285deed0c4f8e6d790f539193a, type: 3}
   GemSound: {fileID: 8300000, guid: 674aa7dbb401c1b41aaa81bd402b0e8e, type: 3}
   ExitSound: {fileID: 8300000, guid: 149d870431c0ae24283095769cfc68ae, type: 3}
+  GameOverSound: {fileID: 8300000, guid: e49022323967b7e4f8154c27ed4b98d5, type: 3}
+  LandSound: {fileID: 8300000, guid: 33ac62df91555fb4c983d32df9ef2ad2, type: 3}
   Colors:
   - {r: 0.5, g: 0, b: 0, a: 0}
   - {r: 0.5, g: 0.025490195, b: 0.5, a: 0}

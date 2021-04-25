@@ -18,15 +18,15 @@ public class Walker : MonoBehaviour {
         OnMoved = default;
     }
 
-    public void MoveToCell(Cell cell) {
+    public void MoveToCell(Cell cell, Action onEnd = default) {
         if (IsMoving) return;
 
         var moveType = cell.X != Cell.X ? MoveType.Walk : MoveType.Fall;
 
-        StartCoroutine(AnimateMove(cell, moveType));
+        StartCoroutine(AnimateMove(cell, moveType, onEnd));
     }
 
-    IEnumerator AnimateMove(Cell cell, MoveType moveType) {
+    IEnumerator AnimateMove(Cell cell, MoveType moveType, Action onEnd = default) {
         IsMoving = true;
         var from = transform.position;
         var to = cell.ToWorldPosition();
@@ -39,5 +39,6 @@ public class Walker : MonoBehaviour {
         GetComponent<CellPosition>().SetCell(cell);
         IsMoving = false;
         OnMoved?.Invoke(moveType);
+        onEnd?.Invoke();
     }
 }

@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
     public AudioClip GemSound;
     public AudioClip ExitSound;
     public AudioClip GameOverSound;
+    public AudioClip LandSound;
     public Color[] Colors;
     // public LevelDef[] LevelDefs;
 
@@ -137,7 +138,9 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
         picker.OnTouchedPickable += PickItem;
 
         GetComponent<PlayerMovementSystem>().Init(CurrentLevel, Player, SpendEnergy);
-        GetComponent<PlayerGravitySystem>().Init(CurrentLevel, Player);
+        GetComponent<PlayerGravitySystem>().Init(CurrentLevel, Player, () => {
+            PlaySound(LandSound);
+        });
         GetComponent<PickerSystem>().Init(CurrentLevel, picker);
         GetComponent<ExitSystem>().Init(CurrentLevel, Player, () => {
             PlaySound(ExitSound);
