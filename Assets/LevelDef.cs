@@ -2,6 +2,7 @@ using UnityEngine;
 
 [System.Serializable]
 public struct LevelDef {
+    public int Index;
     public int Width;
     public int Depth;
     [Range(.25f, 1)] public float BlockDensity;
@@ -12,6 +13,7 @@ public struct LevelDef {
     public static LevelDef CreateLevelDef(int index, float coinDensity, Color[] colors) {
         var w = (index + 4) * 1.5f;
         return new LevelDef {
+            Index = index,
             Width = (int)w,
             Depth = (int)w * (int)w,
             BlockDensity = .5f + Random.Range(0, .5f),

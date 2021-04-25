@@ -70,7 +70,10 @@ public class Level : MonoBehaviour {
     void AddGemRandomlyInRows() {
         Gems = new Gem[Def.Width, Def.Depth + 2];
 
-        for (int y = 0; y <= Gems.GetLength(1); y += Def.GemVerticalSpacing) {
+        int spacing = Def.Index * 2;
+
+        for (int y = 0; y <= Gems.GetLength(1); y += spacing) {
+            spacing++;
             var x = PRNG.Int(Def.Width);
             Gems[x, y] = CreateGem(x, y);
         }

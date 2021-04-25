@@ -1,7 +1,7 @@
 using Damrem.Procedural;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(ExitSystem))]
 [RequireComponent(typeof(PickerSystem))]
 [RequireComponent(typeof(PlayerMovementSystem))]
@@ -22,9 +22,11 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
     public int CoinGain = 10;
     public int MaxEnergy = 5;
     public int EnergyRefill = 10;
+    public int EnergyRefillBetweenLevels = 10;
     public int EnergyWalkCost = 1;
     public int EnergyDigCost = 3;
     [Range(0, 1)] public float CoinDensity = .25f;
+    public AudioClip[] DigSounds;
     public Color[] Colors;
     // public LevelDef[] LevelDefs;
 
@@ -84,6 +86,7 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
         );
 
         level.OnGroupDestroyed += blockCount => {
+            GetComponent<AudioSource>().PlayOneShot(PRNG.InArray(DigSounds));
             int sum = blockCount;
             for (int i = 0; i < blockCount; i++) sum += i;
             Purse.Increment(sum);
@@ -128,7 +131,11 @@ public class GameManager : MonoBehaviour/* , IPointerClickHandler */ {
         GetComponent<PlayerMovementSystem>().Init(CurrentLevel, Player, SpendEnergy);
         GetComponent<PlayerGravitySystem>().Init(CurrentLevel, Player);
         GetComponent<PickerSystem>().Init(CurrentLevel, picker);
-        GetComponent<ExitSystem>().Init(CurrentLevel, Player, PreNextLevel);
+        GetComponent<ExitSystem>().Init(CurrentLevel, Player, () => {
+
+            EnergyBar.Increment(EnergyRefillBetweenLevels);
+            PreNextLevel();
+        });
 
         SetupCamera(Player.transform, CurrentLevel);
         CurrentLevelIndex++;
