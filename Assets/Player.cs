@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,7 @@ public class Player : MonoBehaviour {
     public Cell Cell { get { return GetComponent<CellPosition>().Cell; } }
     public Walker Walker { get; private set; }
     InputAction.CallbackContext CallbackContext;
+    public Direction InputDirection { get; private set; }
 
     public Player Init(Cell cell) {
         var playerInput = GetComponent<PlayerInput>();
@@ -43,6 +45,7 @@ public class Player : MonoBehaviour {
         switch (CallbackContext.action?.name) {
             case "HorizontalMove": HandleHorizontalMove(); break;
             case "VerticalMove": HandleVerticalMove(); break;
+            default: InputDirection = Direction.None; break;
         }
     }
 
@@ -51,6 +54,11 @@ public class Player : MonoBehaviour {
             case InputActionPhase.Started:
             case InputActionPhase.Performed:
                 OnHorizontalMove(CallbackContext.ReadValue<float>());
+                break;
+
+            default:
+            case InputActionPhase.Canceled:
+                InputDirection = Direction.None;
                 break;
         }
     }
@@ -61,6 +69,11 @@ public class Player : MonoBehaviour {
             case InputActionPhase.Performed:
                 OnVerticalMove(CallbackContext.ReadValue<float>());
                 break;
+
+            default:
+            case InputActionPhase.Canceled:
+                InputDirection = Direction.None;
+                break;
         }
     }
 
@@ -69,6 +82,8 @@ public class Player : MonoBehaviour {
 
         var offset = (int)value;
         if (offset == 0) return;
+
+        InputDirection = offset == 1 ? Direction.Right : Direction.Left;
 
         Walker.AttemptMove(offset, 0);
     }
@@ -79,6 +94,8 @@ public class Player : MonoBehaviour {
 
         var offset = (int)value;
         if (offset == 0) return;
+
+        InputDirection = offset == 1 ? Direction.Down : Direction.Up;
 
         Walker.AttemptMove(0, offset);
     }
