@@ -1,4 +1,3 @@
-using Cinemachine;
 using Damrem.Procedural;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -17,6 +16,8 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
     public Purse Purse;
     public EnergyBar EnergyBar;
     public LevelTitle LevelTitle;
+    public WelcomeScreen WelcomeScreen;
+    public Canvas HUD;
     public int EnergyRefill = 10;
     public int EnergyWalkCost = 1;
     public int EnergyDigCost = 3;
@@ -33,6 +34,20 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
     }
 
     void Init() {
+        WelcomeScreen.OnClicked += () => {
+            WelcomeScreen.gameObject.SetActive(false);
+            InitGame();
+        };
+
+        GotoWelcomeScreen();
+    }
+
+    void GotoWelcomeScreen() {
+        HUD.enabled = false;
+        WelcomeScreen.enabled = true;
+    }
+
+    void InitGame() {
         PRNG = new PRNG(Seed);
         InitHUD();
         PreNextLevel();
@@ -44,6 +59,7 @@ public class GameManager : MonoBehaviour, IPointerClickHandler {
     }
 
     void InitHUD() {
+        HUD.enabled = true;
         Purse.Init();
         EnergyBar.Init(25);
     }
